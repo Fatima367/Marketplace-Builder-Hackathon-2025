@@ -11,7 +11,7 @@ const car = defineType({
     { name: "fuel", type: "string", title: "Fuel" },
     { name: "capacity", type: "string", title: "Capacity" },
   ],
-});
+}); 
 
 //Client Schema
 {
