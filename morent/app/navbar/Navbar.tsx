@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import {SearchBar} from "../components/searchBar";
+import { useRouter } from "next/router";
 
 export default function Navbar({ cars }: any) {
   const [wishlist, setWishlist] = useState<any[]>([]);
@@ -21,8 +23,9 @@ export default function Navbar({ cars }: any) {
     localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
   };
 
-  console.log(wishlist);
-
+  const handleSearch = (query: string) => {
+    console.log('Searching for:', query)
+  }
   return (
     <nav
       className="box-border bg-white border border-[#C3D4E9] mt-0 lg:mt-16
@@ -48,7 +51,10 @@ export default function Navbar({ cars }: any) {
         </div>
 
         {/* Search bar */}
-        <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
+        <div className="z-30">
+        <SearchBar onSearch={handleSearch}/>
+        </div>
+        {/* <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
           <div
             className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
          lg:rounded-full rounded-md ring-1 ring-[#C3D4E9] ring-opacity-70 
@@ -95,7 +101,7 @@ export default function Navbar({ cars }: any) {
               />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Profile and Notification */}

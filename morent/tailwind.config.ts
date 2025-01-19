@@ -12,7 +12,12 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        PlusJakartaSans: ["Plus Jakarta Sans, sans-serif"]
+      },
     },
+
   },
+
   plugins: [],
 } satisfies Config;

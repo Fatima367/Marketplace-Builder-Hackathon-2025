@@ -8,7 +8,7 @@ import { MouseEvent, useEffect, useState } from "react";
 export default function Navbar2() {
 
     const [wishlist, setWishlist] = useState<any[]>([]);
-  
+
     useEffect(() => {
       const favItems = JSON.parse(
         localStorage.getItem("carRentWishlist") || "[]"
