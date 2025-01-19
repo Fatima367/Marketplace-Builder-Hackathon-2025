@@ -2,7 +2,7 @@ import Car from "@/lib/types";
 import sanityClient from "@sanity/client";
 import axios from "axios";
 
-//API URL
+//PROVIDED API URL
 const CAR_API_URL =
   "https://sanity-nextjs-application.vercel.app/api/hackathon/template7";
 
@@ -17,15 +17,15 @@ const client = sanityClient({
 // Fetching the car data from the API using async/await and try-catch
 const fetchCarData = async (): Promise<Car[]> => {
   try {
-    const response = await axios.get(CAR_API_URL); //axios request
-    return response.data; // Return the car data
+    const response = await axios.get(CAR_API_URL); // Axios request
+    return response.data; // Return car data
   } catch (error) {
     console.error("Error fetching car data:", error);
     throw error; // Rethrow the error so it can be handled later
   }
 };
 
-//To upload an image to Sanity and get its reference
+// To upload an image to Sanity and get its reference
 const uploadImageToSanity = async (imageUrl: string) => {
   try {
     const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
@@ -33,7 +33,7 @@ const uploadImageToSanity = async (imageUrl: string) => {
 
     // Upload the image to Sanity
     const uploadedImage = await client.assets.upload("image", imageBuffer, {
-      filename: imageUrl.split("/").pop(), // to use the file name from the URL
+      filename: imageUrl.split("/").pop(), // Use the file name from the URL
     });
 
     return uploadedImage._id; // Return the asset reference ID
@@ -43,10 +43,19 @@ const uploadImageToSanity = async (imageUrl: string) => {
   }
 };
 
+// Function to generate a slug based on name and _id
+const generateSlug = (name: string, id: string) => {
+  const slugifiedName = name.trim().replace(/\s+/g, "-").toLowerCase();
+  return `${id}-${slugifiedName}`;
+};
+
 // Transform the data into the format expected by Sanity
 const transformCarData = async (car: Car) => {
   const imageRef = await uploadImageToSanity(car.image_url); // Upload image and get the reference
-  const carId = car.id.toString();
+  const carId = car.id ? String(car.id) : "unknown";
+
+  const slug = generateSlug(car.name, carId); // Generate the slug
+
   return {
     _type: "car", // The document type in Sanity (Schema)
     name: car.name,
@@ -64,7 +73,11 @@ const transformCarData = async (car: Car) => {
     originalPrice: car.originalPrice || null,
     mode: car.transmission,
     tags: car.tags,
-    _id: carId, // Use the car ID from the API as the Sanity document ID
+    slug: {
+      _type: "slug", // Ensure the slug type matches the schema
+      current: slug,
+    },
+    _id: carId, // Car _id from API as the Sanity document _id
   };
 };
 
@@ -75,6 +88,7 @@ const syncCarsToSanity = async () => {
     const carData = await fetchCarData(); // Fetch data from the API
     const transformedData = await Promise.all(carData.map(transformCarData)); // Transform each car into Sanity format
     console.log(`Fetched ${carData.length} cars`);
+
     // Use async/await in a for loop to sync each car to Sanity
     for (const car of transformedData) {
       try {
@@ -92,6 +106,3 @@ const syncCarsToSanity = async () => {
 
 // Run the sync function
 syncCarsToSanity();
-
-//Command for Importing the Fetched Data to Sanity:
-//npx sanity@latest exec sanity/scripts/importData.ts

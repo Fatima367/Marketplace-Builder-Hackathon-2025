@@ -19,7 +19,7 @@ export const car = {
       title: "Car Image",
       type: "image",
       options: {
-        hotspot: true /* hotspot for better image cropping */,
+        hotspot: true, // Hotspot for better image cropping
       },
     },
     {
@@ -61,6 +61,17 @@ export const car = {
         layout: "tags",
       },
       description: "Tags for categorization (e.g., popular, recommended)",
+    },
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug", 
+      description: "A unique URL-friendly version of the car name",
+      options: {
+        source: "name", // Automatically generate slug from the `name`
+        maxLength: 96, // Maximum length of the slug
+      },
+      validation: (Rule: any) => Rule.required(),
     },
   ],
 };
