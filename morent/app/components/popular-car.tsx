@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FavIcon from "./favIcon";
 import { CarListProps } from "@/lib/types";
-import { popularCars } from "../data/query";
+import { popularCars } from "../data/page";
 
 export default async function PopularCarSection({ carCardsNo }: CarListProps) {
   const cars = popularCars.slice(0, carCardsNo);

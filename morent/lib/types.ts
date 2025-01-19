@@ -13,6 +13,6 @@ export default interface Car {
 }
 
 export type CarListProps = {
-  cars: Car[];
+  cars?: any;
   carCardsNo: number; // The number of cars to show (this can be passed as a prop)
 };

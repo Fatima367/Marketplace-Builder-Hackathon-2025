@@ -4,15 +4,13 @@ import Link from "next/link";
 import Navbar from "./navbar/Navbar";
 import NavbarMobile from "./navbar/NavbarMobile";
 import { ToastContainer } from "react-toastify";
-import { popularCars, recommendedCars } from "./data/query";
+import { popularCars, recommendedCars } from "./data/page";
 import PopularCarSection from "./components/popular-car";
-import HomePagePickAndDropForm, {
-} from "./components/pickNdrop-form";
+import HomePagePickAndDropForm from "./components/pickNdrop-form";
 
 export default function Home() {
   const popularCarData = popularCars;
   const recommendedCarData = recommendedCars;
-  const KEY = 'AIzaSyD_Z2aFBJiOGRrZggdRmwd1Hkc9vYgszDI'
 
   return (
     <section className="bg-[#F6F7F9] font-PlusJakartaSans relative">
@@ -118,7 +116,7 @@ export default function Home() {
         {/*--------------------------------------------------------------------------------------------------------*/}
 
         {/*--------------*/}
-        
+
         <HomePagePickAndDropForm />
 
         {/*--------------------------------------------------------------------------------------------------------*/}

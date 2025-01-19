@@ -1,7 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { defineQuery } from "next-sanity";
 
-export const POPULAR_CAR_QUERY = defineQuery(`*[
+const POPULAR_CAR_QUERY = defineQuery(`*[
   _type == "car"
   && "popular" in tags[] && defined(_id)
 ]{
@@ -13,6 +13,7 @@ export const POPULAR_CAR_QUERY = defineQuery(`*[
   mode,
   fuel,
   category,
+  slug,
   image {
     asset -> {
       _id,
@@ -23,13 +24,13 @@ export const POPULAR_CAR_QUERY = defineQuery(`*[
   _updatedAt
 }|order(_createdAt desc)`);
 
-export const { data: popularCarList } = await sanityFetch({
+const { data: popularCarList } = await sanityFetch({
   query: POPULAR_CAR_QUERY,
 });
 
 export const popularCars = popularCarList;
 
-export const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
+const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   _type == "car"
   && "recommended" in tags[] && defined(_id)
 ]{
@@ -51,7 +52,7 @@ export const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   _updatedAt
 }|order(_createdAt desc)`);
 
-export const { data: recommendedCarList } = await sanityFetch({
+const { data: recommendedCarList } = await sanityFetch({
   query: RECOMMENDATION_CAR_QUERY,
 });
 

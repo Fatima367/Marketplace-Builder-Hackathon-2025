@@ -1,20 +1,153 @@
-import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Navbar from "../navbar/Navbar";
-import Navbar2 from "../navbar/Navbar2";
-import Sidebar from "../components/sideBar";
+import Navbar from "@/app/navbar/Navbar";
+import Navbar2 from "@/app/navbar/Navbar2";
+import Sidebar from "@/app/components/sideBar";
 import {
   DetailCarRecentCars,
   DetailCarRecommendations,
-} from "../components/car-rent-carGrids";
-import { popularCars, recommendedCars } from "../data/query";
-import Reviews from "../components/reviews";
+} from "@/app/components/car-rent-carGrids";
+import Reviews from "@/app/components/reviews";
+import { defineQuery } from "next-sanity";
+import { notFound } from "next/navigation";
+import { sanityFetch } from "@/sanity/lib/live";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { client } from "@/sanity/lib/client";
+import imageUrlBuilder from "@sanity/image-url";
+import { ToastContainer } from "react-toastify";
 
-const DetailCarRent = () => {
-  const recentCarData = popularCars;
-  const recommendedCarData = recommendedCars;
+const CAR_QUERY = defineQuery(`*[
+  _type == "car" && slug.current == $slug
+][0] {
+  ...,
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}`);
+
+const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "recommended" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+const POPULAR_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "popular" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+const { projectId, dataset } = client.config();
+
+// Function to generate image URL for the car images
+const urlFor = (source: SanityImageSource) =>
+  projectId && dataset
+    ? imageUrlBuilder({ projectId, dataset }).image(source)
+    : null;
+
+export default async function DetailCarRent({
+  params,
+}: {
+  params: Promise<{ slug: string }>; // Expecting slug with the format 'carId-name'
+}) {
+  // Extracting the slug from the params (e.g., '10-chevrolet-camaro')
+  const { slug } = await params;
+
+  // Extract carId and name from the slug
+  const [carId, ...nameParts] = slug.split("-");
+  const carName = nameParts.join(" "); // Join the remaining parts back to form the car name
+
+  console.log("Extracted carId:", carId); // Check the extracted carId
+  console.log("Extracted carName:", carName); // Check the extracted carName
+
+  // Fetching the car details from Sanity using the CAR_QUERY with slug
+  const { data: car } = await sanityFetch({
+    query: CAR_QUERY,
+    params: { slug }, // Pass the full slug (e.g., '10-chevrolet-camaro')
+  });
+
+  // If no car is found, handle the error (e.g., show a 404 page)
+  if (!car) {
+    console.error("Car not found for slug:", slug);
+    notFound(); // Redirect to a 404 page if the car is not found
+  }
+
+  // Destructure the car data
+  const {
+    _id,
+    name,
+    rentPerDay,
+    originalPrice,
+    capacity,
+    mode,
+    fuel,
+    category,
+    image,
+    _createdAt,
+    _updatedAt,
+  } = car;
+
+  // Generate the image URL (if an image exists)
+  const imageUrl = image ? urlFor(image)?.width(380).height(120).url() : null;
+
+  const { data: recommendedCarList } = await sanityFetch({
+    query: RECOMMENDATION_CAR_QUERY,
+  });
+
+  const { data: popularCarList } = await sanityFetch({
+    query: POPULAR_CAR_QUERY,
+  });
+
+  const recentCarData = popularCarList;
 
   return (
     <div className="bg-[#F6F7F9]">
@@ -23,7 +156,7 @@ const DetailCarRent = () => {
       <div className="flex relative items-start">
         {/*Left*/}
         <Sidebar className="h-[158rem]" />
-
+        <ToastContainer hideProgressBar />
         {/*Right*/}
         <div className="flex flex-col items-center justify-center mb-8 relative lg:px-6 md:px-4 mx-auto gap-8">
           <div
@@ -52,23 +185,25 @@ const DetailCarRent = () => {
                     top-4"
                 >
                   <h2 className="text-[32px] font-semibold text-left">
-                    Sports car with the best <br /> design and acceleration
+                    {category} car with the best <br /> design and acceleration
                   </h2>
                   <p className="text-base font-medium text-left">
                     Safety and comfort while driving a <br />
-                    futuristic and elegant sports car
+                    futuristic and elegant {category} car
                   </p>
                 </div>
 
                 <div className="flex items-center justify-center">
-                  <Image
-                    src="/images/image 8.png"
-                    height={120}
-                    width={380}
-                    alt="car-image"
-                    className="z-30 absolute lg:bottom-0 lg:top-48
+                  {imageUrl && (
+                    <Image
+                      src="/images/image 8.png"
+                      height={120}
+                      width={380}
+                      alt="car-image"
+                      className="z-30 absolute lg:bottom-0 lg:top-48
                     mx-auto mb-10 lg:mt-8 mt-6 bottom-0 top-72"
-                  />
+                    />
+                  )}
                 </div>
               </div>
 
@@ -125,9 +260,7 @@ const DetailCarRent = () => {
               <div className="flex flex-col">
                 <div className="">
                   <div className="flex flex-col space-y-2">
-                    <h2 className="text-[32px] font-bold text-left">
-                      Nissan GT - R
-                    </h2>
+                    <h2 className="text-[32px] font-bold text-left">{name}</h2>
                     <div className="flex space-x-2 items-start justify-start">
                       <Image
                         src="/images/Four Star.png"
@@ -154,7 +287,7 @@ const DetailCarRent = () => {
 
                 <div className="mt-8 md:mt-4 lg:mt-8 flex items-start justify-between">
                   <p className="text-[#596780] lg:text-lg text-lg md:text-base text-left">
-                    NISMO has become the embodiment of Nissan's outstanding
+                    NISMO has become the embodiment of {name}'s outstanding
                     performance, inspired by the most unforgiving proving
                     ground, the "race track".
                   </p>
@@ -166,14 +299,16 @@ const DetailCarRent = () => {
                       <p className="text-[#90A3BF] text-lg text-left">
                         Type Car
                       </p>
-                      <p className="text-[#596780] text-lg text-right">Sport</p>
+                      <p className="text-[#596780] text-lg text-right">
+                        {category}
+                      </p>
                     </div>
                     <div className="lg:space-x-4 space-x-28 flex">
                       <p className="text-[#90A3BF] text-lg text-left">
                         Steering
                       </p>
                       <p className="text-[#596780] text-lg text-right">
-                        Manual
+                        {mode}
                       </p>
                     </div>
                   </div>
@@ -183,14 +318,16 @@ const DetailCarRent = () => {
                         Capacity
                       </p>
                       <p className="text-[#596780] text-lg text-right">
-                        2 People
+                        {capacity}
                       </p>
                     </div>
                     <div className="lg:space-x-4 space-x-28 flex">
                       <p className="text-[#90A3BF] text-lg text-left">
                         Gasoline
                       </p>
-                      <p className="text-[#596780] text-lg text-right">70L</p>
+                      <p className="text-[#596780] text-lg text-right">
+                        {fuel}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -201,13 +338,13 @@ const DetailCarRent = () => {
                   md:absolute md:bottom-5"
                   >
                     <div className="lg:text-[28px] text-2xl font-bold">
-                      $80.00/
+                      {rentPerDay}/
                       <span className="lg:text-base text-sm text-[#90A3BF]">
-                        days
+                        day
                       </span>
                     </div>
                     <div className="mt-1 text-base text-[#90A3BF] line-through">
-                      $100.00
+                      {originalPrice || null}
                     </div>
                   </div>
 
@@ -233,11 +370,9 @@ const DetailCarRent = () => {
           <DetailCarRecentCars cars={recentCarData} carCardsNo={3} />
 
           {/*Recommended Car Section*/}
-          <DetailCarRecommendations cars={recommendedCarData} carCardsNo={6} />
+          <DetailCarRecommendations cars={recommendedCarList} carCardsNo={6} />
         </div>
       </div>
     </div>
   );
-};
-
-export default DetailCarRent;
+}

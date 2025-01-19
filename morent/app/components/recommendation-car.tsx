@@ -2,8 +2,7 @@ import { CarListProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import FavIcon from "./favIcon";
-import { recommendedCars } from "../data/query";
-
+import { recommendedCars } from "../data/page";
 
 export default async function RecommendationCar({ carCardsNo }: CarListProps) {
   const recommendCars = recommendedCars.slice(0, carCardsNo);

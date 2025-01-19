@@ -5,12 +5,12 @@ import Navbar from "../navbar/Navbar";
 import Navbar2 from "../navbar/Navbar2";
 import SideBar from "../components/sideBar";
 import { ToastContainer } from "react-toastify";
-import { popularCars, recommendedCars } from "../data/query";
+import { popularCars, recommendedCars } from "../data/page";
 import {
   CarRentPopularCarSection,
   CarRentRecommendationCar,
 } from "../components/car-rent-carGrids";
-import  { PickAndDropForm } from "../components/pickNdrop-form";
+import { PickAndDropForm } from "../components/pickNdrop-form";
 
 const CarRent = () => {
   const popularCarData = popularCars;
@@ -26,7 +26,7 @@ const CarRent = () => {
 
         {/*Right*/}
         <div className="flex flex-col items-start justify-center mx-auto lg:px-6 lg:w-[83%]">
-         <PickAndDropForm />
+          <PickAndDropForm />
 
           <ToastContainer hideProgressBar />
           <div className="flex flex-col lg:space-y-8 space-y-4 mx-auto">
