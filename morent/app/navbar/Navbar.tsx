@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import {SearchBar} from "../components/searchBar";
+import { SearchBar } from "../components/searchBar";
 import { useRouter } from "next/router";
 
 export default function Navbar({ cars }: any) {
@@ -24,8 +24,8 @@ export default function Navbar({ cars }: any) {
   };
 
   const handleSearch = (query: string) => {
-    console.log('Searching for:', query)
-  }
+    console.log("Searching for:", query);
+  };
   return (
     <nav
       className="box-border bg-white border border-[#C3D4E9] mt-0 lg:mt-16
@@ -52,7 +52,7 @@ export default function Navbar({ cars }: any) {
 
         {/* Search bar */}
         <div className="z-30">
-        <SearchBar onSearch={handleSearch}/>
+          <SearchBar onSearch={handleSearch} />
         </div>
         {/* <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
           <div

@@ -66,7 +66,7 @@ export default function Sidebar({ className }: { className?: string }) {
           <p className="text-xl font-medium" key={category}>
             <Checkbox
               className="mr-2"
-              onCheckedChange={(isChecked: boolean) =>
+              onCheckedChange={(isChecked) =>
                 handleCategoryChange(category, isChecked as boolean)
               }
             />
@@ -82,7 +82,7 @@ export default function Sidebar({ className }: { className?: string }) {
           <p className="text-xl font-medium" key={capacity}>
             <Checkbox
               className="mr-2"
-              onCheckedChange={(isChecked: boolean) =>
+              onCheckedChange={(isChecked) =>
                 handleCapacityChange(capacity, isChecked as boolean)
               }
             />

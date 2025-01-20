@@ -106,3 +106,6 @@ const syncCarsToSanity = async () => {
 
 // Run the sync function
 syncCarsToSanity();
+
+//Migrated the data into Sanity by running this command:
+//npx sanity@latest exec sanity/scripts/importData.ts

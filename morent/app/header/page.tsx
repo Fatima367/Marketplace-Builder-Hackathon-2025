@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Header() { 
+export default function Header() {
   return (
     <header className="hidden lg:mx-8 lg:mt-0 lg:visible lg:block">
       <div className="flex items-center justify-between lg:-mb-14 lg:mt-2 ">

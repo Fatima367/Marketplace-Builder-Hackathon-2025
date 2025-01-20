@@ -1,7 +1,7 @@
-import { client } from '@/sanity/lib/client'
-import { groq } from 'next-sanity'
+import { client } from "@/sanity/lib/client";
+import { groq } from "next-sanity";
 
-export default function SearchResults(debouncedQuery?: string){
+export default function SearchResults(debouncedQuery?: string) {
   return client.fetch(
     groq`*[
   _type == "car"
@@ -24,6 +24,5 @@ export default function SearchResults(debouncedQuery?: string){
   _createdAt,
   _updatedAt
 }`
-  )
+  );
 }
-

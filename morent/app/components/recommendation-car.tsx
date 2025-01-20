@@ -2,10 +2,37 @@ import { CarListProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import FavIcon from "./favIcon";
-import { recommendedCars } from "../data/page";
+import { defineQuery } from "next-sanity";
+import { sanityFetch } from "@/sanity/lib/live";
+
+const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "recommended" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+export const { data: recommendedCarList } = await sanityFetch({
+  query: RECOMMENDATION_CAR_QUERY,
+});
 
 export default async function RecommendationCar({ carCardsNo }: CarListProps) {
-  const recommendCars = recommendedCars.slice(0, carCardsNo);
+  const recommendCars = recommendedCarList.slice(0, carCardsNo);
 
   return (
     <div>

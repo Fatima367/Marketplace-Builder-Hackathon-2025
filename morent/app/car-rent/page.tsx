@@ -4,16 +4,17 @@ import Navbar from "../navbar/Navbar";
 import Navbar2 from "../navbar/Navbar2";
 import SideBar from "../components/sideBar";
 import { ToastContainer } from "react-toastify";
-import { popularCars, recommendedCars } from "../data/page";
 import {
   CarRentPopularCarSection,
   CarRentRecommendationCar,
 } from "../components/car-rent-carGrids";
 import { PickAndDropForm } from "../components/pickNdrop-form";
+import { popularCarList } from "../components/popular-car";
+import { recommendedCarList } from "../components/recommendation-car";
 
 const CarRent = () => {
-  const popularCarData = popularCars;
-  const recommendedCarData = recommendedCars;
+  const popularCarData = popularCarList;
+  const recommendedCarData = recommendedCarList;
 
   return (
     <div className="bg-[#F6F7F9]">

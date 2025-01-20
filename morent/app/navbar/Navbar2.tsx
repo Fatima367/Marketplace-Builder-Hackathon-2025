@@ -6,23 +6,22 @@ import Link from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
 
 export default function Navbar2() {
+  const [wishlist, setWishlist] = useState<any[]>([]);
 
-    const [wishlist, setWishlist] = useState<any[]>([]);
+  useEffect(() => {
+    const favItems = JSON.parse(
+      localStorage.getItem("carRentWishlist") || "[]"
+    );
+    setWishlist(favItems);
+    console.log("Product passed to Wishlist:", favItems);
+  }, []);
 
-    useEffect(() => {
-      const favItems = JSON.parse(
-        localStorage.getItem("carRentWishlist") || "[]"
-      );
-      setWishlist(favItems);
-      console.log("Product passed to Wishlist:", favItems);
-    }, []);
-  
-    const handleDelete = (itemId: string) => {
-      const updatedWishlist = wishlist.filter((item) => item._id !== itemId);
-      setWishlist(updatedWishlist); // Update the wishlist state
-      localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
-    };
-  
+  const handleDelete = (itemId: string) => {
+    const updatedWishlist = wishlist.filter((item) => item._id !== itemId);
+    setWishlist(updatedWishlist); // Update the wishlist state
+    localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
+  };
+
   const [showNav, setShowNav] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
@@ -82,9 +81,11 @@ export default function Navbar2() {
                   />
                 </button>
                 {wishlist.length > 0 && (
-            <div className="rounded-full h-2 w-2 bg-red-500 z-10 absolute 
-            left-5"></div>
-          )}
+                  <div
+                    className="rounded-full h-2 w-2 bg-red-500 z-10 absolute 
+            left-5"
+                  ></div>
+                )}
                 <p className="text-sm text-[#596780]"> Wishlist</p>
               </li>
             </Link>

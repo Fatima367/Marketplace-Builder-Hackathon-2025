@@ -2,10 +2,39 @@ import Image from "next/image";
 import Link from "next/link";
 import FavIcon from "./favIcon";
 import { CarListProps } from "@/lib/types";
-import { popularCars } from "../data/page";
+import { defineQuery } from "next-sanity";
+import { sanityFetch } from "@/sanity/lib/live";
+
+const POPULAR_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "popular" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+export const { data: popularCarList } = await sanityFetch({
+  query: POPULAR_CAR_QUERY,
+});
+
 
 export default async function PopularCarSection({ carCardsNo }: CarListProps) {
-  const cars = popularCars.slice(0, carCardsNo);
+  const cars = popularCarList.slice(0, carCardsNo);
 
   return (
     <div>

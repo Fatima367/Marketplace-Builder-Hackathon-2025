@@ -1,16 +1,15 @@
 import Image from "next/image";
-import RecommendationCar from "./components/recommendation-car";
+import RecommendationCar, { recommendedCarList } from "./components/recommendation-car";
 import Link from "next/link";
 import Navbar from "./navbar/Navbar";
 import NavbarMobile from "./navbar/NavbarMobile";
 import { ToastContainer } from "react-toastify";
-import { popularCars, recommendedCars } from "./data/page";
-import PopularCarSection from "./components/popular-car";
+import PopularCarSection, { popularCarList } from "./components/popular-car";
 import HomePagePickAndDropForm from "./components/pickNdrop-form";
 
 export default function Home() {
-  const popularCarData = popularCars;
-  const recommendedCarData = recommendedCars;
+  const popularCarData = popularCarList;
+  const recommendedCarData = recommendedCarList;
 
   return (
     <section className="bg-[#F6F7F9] font-PlusJakartaSans relative">

@@ -13,8 +13,8 @@ export default {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        PlusJakartaSans: ["Plus Jakarta Sans, sans-serif"]
-      },
+  			PlusJakartaSans: ["Plus Jakarta Sans, sans-serif"]
+  		},
     },
 
   },
