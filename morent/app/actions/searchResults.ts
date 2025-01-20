@@ -30,6 +30,6 @@ export default function SearchResults(debouncedQuery?: string) {
       _createdAt,
       _updatedAt
     }`,
-    { query: `*${query}*` } // Use wildcards to search for cars that contain the query string
+    { query: `*${query}*` as any} // Use wildcards to search for cars that contain the query string
   );
 }
