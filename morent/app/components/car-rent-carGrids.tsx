@@ -4,6 +4,7 @@ import FavIcon from "./favIcon";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+
 export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
   const searchParams = useSearchParams();
 
@@ -11,23 +12,32 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
   const selectedCategories = searchParams.getAll("category");
   const selectedCapacities = searchParams.getAll("capacity");
 
-  // Filter cars based on selected categories and selected capacities
-  const filteredPopularCars = cars.filter((car: any) => {
-    const matchesCategory = selectedCategories.length
-      ? selectedCategories.includes(car.category)
-      : true; // If no categories are selected, include all cars
-    const matchesCapacity = selectedCapacities.length
-      ? selectedCapacities.includes(car.capacity)
-      : true; // If no capacities are selected, include all cars
+  console.log("Selected Categories:", selectedCategories);
+  console.log("Selected Capacities:", selectedCapacities);
 
-    return matchesCategory && matchesCapacity;
-  });
+  // Filter cars based on selected categories and selected capacities
+  const filteredPopularCars = Array.isArray(cars)
+    ? cars.filter((car: any) => {
+        const matchesCategory = selectedCategories.length
+          ? selectedCategories.includes(car.category)
+          : true; // If no categories are selected, include all cars
+        const matchesCapacity = selectedCapacities.length
+          ? selectedCapacities.includes(car.capacity)
+          : true; // If no capacities are selected, include all cars
+
+        return matchesCategory && matchesCapacity;
+      })
+    : [];
 
   const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
 
+  if (carsToDisplay.length === 0) {
+    return <div>No cars available</div>;
+  }
+
   return (
     <div>
-      {/*Car Cards*/}
+      {/* Car Cards */}
       <div className="hidden sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:grid sm:grid max-md:justify-items-center">
         {carsToDisplay.map((car: any) => (
           <div
@@ -51,6 +61,7 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
               height={100}
               alt="car-image"
               className="mt-16 w-64 h-auto object-cover mx-auto"
+              layout="responsive"
             />
 
             <div className="flex space-x-4 sm:flex-row mt-16 items-center justify-center -mx-2">
@@ -108,6 +119,7 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
     </div>
   );
 }
+
 
 export function CarRentRecommendationCar({ cars, carCardsNo }: any) {
   const searchParams = useSearchParams();

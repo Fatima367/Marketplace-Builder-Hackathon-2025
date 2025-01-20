@@ -29,7 +29,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
       return;
     }
 
-    // Start loading state when search query is available
+    // Start loading state when the search query is available
     setIsLoading(true);
 
     // Fetch search results (assuming SearchResults returns a list of cars)
@@ -39,7 +39,19 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           text: car.name,
           slug: car.slug?.current,
         }));
-        setSuggestions(newSuggestions);
+
+        // If no results found, show the 'No cars found' message
+        if (newSuggestions.length === 0) {
+          setSuggestions([]);
+        } else {
+          setSuggestions(newSuggestions);
+        }
+
+        setShowSuggestions(true);
+      })
+      .catch(() => {
+        // Handle error if necessary, such as network issues
+        setSuggestions([]);
         setShowSuggestions(true);
       })
       .finally(() => setIsLoading(false)); // Stop loading after fetching results
@@ -128,9 +140,9 @@ export function SearchBar({ onSearch }: SearchBarProps) {
       </div>
 
       {/* Suggestions Dropdown */}
-      {showSuggestions && (query || suggestions.length > 0) && (
+      {showSuggestions && (
         <div
-          className="absolute z-30 w-full mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto
+          className="absolute z-30 min-w-96 mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto
         top-5"
         >
           {isLoading ? (
@@ -153,7 +165,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
               ))}
             </ul>
           ) : (
-            <div className="p-4 text-center">No results found</div>
+            <div className="p-4 text-center">No cars found</div> // Display message when no results found
           )}
         </div>
       )}
