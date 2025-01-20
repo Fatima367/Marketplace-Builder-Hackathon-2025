@@ -1,15 +1,66 @@
 import Image from "next/image";
-import RecommendationCar, { recommendedCarList } from "./components/recommendation-car";
+import RecommendationCar, {
+  recommendedCarList,
+} from "./components/recommendation-car";
 import Link from "next/link";
 import Navbar from "./navbar/Navbar";
 import NavbarMobile from "./navbar/NavbarMobile";
 import { ToastContainer } from "react-toastify";
 import PopularCarSection, { popularCarList } from "./components/popular-car";
 import HomePagePickAndDropForm from "./components/pickNdrop-form";
+import { sanityFetch } from "@/sanity/lib/live";
+import { defineQuery } from "next-sanity";
 
-export default function Home() {
-  const popularCarData = popularCarList;
-  const recommendedCarData = recommendedCarList;
+const POPULAR_CAR_QUERY = defineQuery(`*[ 
+  _type == "car" && 
+  "popular" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+const RECOMMENDATION_CAR_QUERY = defineQuery(`*[ 
+  _type == "car" && 
+  "recommended" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+export default async function Home() {
+  const popularCarList = await sanityFetch({ query: POPULAR_CAR_QUERY });
+  const recommendedCarList = await sanityFetch({
+    query: RECOMMENDATION_CAR_QUERY,
+  });
 
   return (
     <section className="bg-[#F6F7F9] font-PlusJakartaSans relative">
@@ -134,7 +185,7 @@ export default function Home() {
             </div>
 
             {/*Car Cards*/}
-            <PopularCarSection cars={popularCarData} carCardsNo={4} />
+            <PopularCarSection cars={popularCarList.data} carCardsNo={4} />
           </div>
         </div>
 
@@ -152,7 +203,7 @@ export default function Home() {
 
             {/*Car Cards*/}
 
-            <RecommendationCar cars={recommendedCarData} carCardsNo={8} />
+            <RecommendationCar cars={recommendedCarList.data} carCardsNo={8} />
 
             <div className="flex items-center justify-center my-16 mx-auto">
               <Link href="/car-rent">
