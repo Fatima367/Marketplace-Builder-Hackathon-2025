@@ -8,7 +8,7 @@ interface Location {
   display_name: string;
 }
 
-const API_KEY = process.env.LOCATIONIQ_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY;
 
 export default function HomePagePickAndDropForm() {
   const [pickupLocation, setPickupLocation] = useState<string>("");

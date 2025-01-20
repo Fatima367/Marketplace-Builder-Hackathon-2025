@@ -31,13 +31,15 @@ export default async function PopularCarSection({ carCardsNo }: CarListProps) {
               <FavIcon car={car} />
             </div>
 
-            <Image
-              src={car.image.asset.url}
-              width={300}
-              height={100}
-              alt="car-image"
-              className="mt-16 w-64 h-auto object-cover mx-auto"
-            />
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
+              <Image
+                src={car.image.asset.url}
+                width={300}
+                height={100}
+                alt="car-image"
+                className="mt-16 w-64 h-auto object-cover mx-auto"
+              />
+            </Link>
 
             <div className="flex space-x-4 sm:flex-row mt-16 items-center justify-center -mx-2">
               <div className="flex space-x-1 items-center justify-center">

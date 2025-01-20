@@ -4,7 +4,7 @@ import Link from "next/link";
 import Navbar from "./navbar/Navbar";
 import NavbarMobile from "./navbar/NavbarMobile";
 import { ToastContainer } from "react-toastify";
-import  popularCars, { recommendedCars } from "./data/page";
+import { popularCars, recommendedCars } from "./data/page";
 import PopularCarSection from "./components/popular-car";
 import HomePagePickAndDropForm from "./components/pickNdrop-form";
 

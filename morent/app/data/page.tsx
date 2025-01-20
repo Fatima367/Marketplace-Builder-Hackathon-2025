@@ -28,7 +28,7 @@ const { data: popularCarList } = await sanityFetch({
   query: POPULAR_CAR_QUERY,
 });
 
-const popularCars = popularCarList;
+export const popularCars = popularCarList;
 
 const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   _type == "car"
@@ -57,5 +57,3 @@ const { data: recommendedCarList } = await sanityFetch({
 });
 
 export const recommendedCars = recommendedCarList;
-
-export default popularCars;

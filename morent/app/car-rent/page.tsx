@@ -4,7 +4,7 @@ import Navbar from "../navbar/Navbar";
 import Navbar2 from "../navbar/Navbar2";
 import SideBar from "../components/sideBar";
 import { ToastContainer } from "react-toastify";
-import  popularCars, { recommendedCars }  from "../data/page";
+import { popularCars, recommendedCars } from "../data/page";
 import {
   CarRentPopularCarSection,
   CarRentRecommendationCar,
