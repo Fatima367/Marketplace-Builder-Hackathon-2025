@@ -35,7 +35,7 @@ const POPULAR_CAR_QUERY = defineQuery(`*[
   _updatedAt
 }|order(_createdAt desc)`);
 
-export const { data: popularCarList } = await sanityFetch({
+const { data: popularCarList } = await sanityFetch({
   query: POPULAR_CAR_QUERY,
 });
 
@@ -61,7 +61,7 @@ const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   _updatedAt
 }|order(_createdAt desc)`);
 
-export const { data: recommendedCarList } = await sanityFetch({
+const { data: recommendedCarList } = await sanityFetch({
   query: RECOMMENDATION_CAR_QUERY,
 });
 
