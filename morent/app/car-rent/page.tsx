@@ -9,12 +9,63 @@ import {
   CarRentRecommendationCar,
 } from "../components/car-rent-carGrids";
 import { PickAndDropForm } from "../components/pickNdrop-form";
-import { popularCarList } from "../components/popular-car";
-import { recommendedCarList } from "../components/recommendation-car";
+import { sanityFetch } from "@/sanity/lib/live";
+import { defineQuery } from "next-sanity";
+
+const POPULAR_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "popular" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  slug,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+export const { data: popularCarList } = await sanityFetch({
+  query: POPULAR_CAR_QUERY,
+});
+
+const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
+  _type == "car"
+  && "recommended" in tags[] && defined(_id)
+]{
+  _id,
+  name,
+  rentPerDay,
+  originalPrice,
+  capacity,
+  mode,
+  fuel,
+  category,
+  image {
+    asset -> {
+      _id,
+      url
+    }
+  },
+  _createdAt,
+  _updatedAt
+}|order(_createdAt desc)`);
+
+export const { data: recommendedCarList } = await sanityFetch({
+  query: RECOMMENDATION_CAR_QUERY,
+});
 
 const CarRent = () => {
-  const popularCarData = popularCarList;
-  const recommendedCarData = recommendedCarList;
 
   return (
     <div className="bg-[#F6F7F9]">
@@ -31,11 +82,11 @@ const CarRent = () => {
           <ToastContainer hideProgressBar />
           <div className="flex flex-col lg:space-y-8 space-y-4 mx-auto">
             {/*Row 1*/}
-            <CarRentPopularCarSection cars={popularCarData} carCardsNo={3} />
+            <CarRentPopularCarSection cars={popularCarList} carCardsNo={3} />
 
             {/*Row 2*/}
             <CarRentRecommendationCar
-              cars={recommendedCarData}
+              cars={recommendedCarList}
               carCardsNo={6}
             />
           </div>
