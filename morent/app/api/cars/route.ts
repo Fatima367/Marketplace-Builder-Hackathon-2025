@@ -37,6 +37,7 @@ const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   mode,
   fuel,
   category,
+  slug,
   image {
     asset -> {
       _id,
@@ -50,27 +51,26 @@ const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
 export async function GET(req: Request, res: Response) {
   try {
     const popularCarList = await sanityFetch({ query: POPULAR_CAR_QUERY });
-    
-    const recommendedCarList = await sanityFetch({ query: RECOMMENDATION_CAR_QUERY });
-    
+
+    const recommendedCarList = await sanityFetch({
+      query: RECOMMENDATION_CAR_QUERY,
+    });
+
     if (!popularCarList || !recommendedCarList) {
-      return NextResponse.json(
-        { message: "No cars found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "No cars found" }, { status: 404 });
     }
 
     // Return separate lists for popular and recommended cars
     return NextResponse.json(
       {
         message: "OK",
-        popularCars: popularCarList,  
-        recommendedCars: recommendedCarList 
+        popularCars: popularCarList,
+        recommendedCars: recommendedCarList,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);  
+    console.error(error);
     return NextResponse.json(
       { message: "Error, cars not found" },
       { status: 500 }

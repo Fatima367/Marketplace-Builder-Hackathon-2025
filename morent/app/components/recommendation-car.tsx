@@ -63,7 +63,7 @@ export default function RecommendationCar({
               </div>
               <FavIcon car={car} />
             </div>
-            <Link href={`/detail-car-rent/${car.slug?.current || ""}`}>
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
               <Image
                 width={300}
                 height={100}

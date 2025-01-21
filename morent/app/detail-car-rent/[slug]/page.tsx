@@ -196,7 +196,7 @@ export default async function DetailCarRent({
                 <div className="flex items-center justify-center">
                   {imageUrl && (
                     <Image
-                      src="/images/image 8.png"
+                      src={imageUrl}
                       height={120}
                       width={380}
                       alt="car-image"
@@ -224,13 +224,15 @@ export default async function DetailCarRent({
                     className="rounded-lg lg:h-[108px] lg:w-[132px] h-14 w-[88px] absolute"
                   />
 
-                  <Image
-                    src="/images/image 8.png"
-                    height={36}
-                    width={116}
-                    alt="car"
-                    className="z-50 rounded-none mx-auto absolute lg:h-[36px] lg:w-[116px] h-[26px] w-20"
-                  />
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      height={36}
+                      width={116}
+                      alt="car"
+                      className="z-50 rounded-none mx-auto absolute lg:h-[36px] lg:w-[116px] h-[26px] w-20"
+                    />
+                  )}
                 </div>
 
                 <Image
