@@ -19,9 +19,6 @@ export default function RecommendationCar({
         const response = await fetch("/api/cars");
         const data = await response.json();
 
-        // Log the data for debugging
-        console.log(data);
-
         if (response.ok) {
           // Fetch recommended cars from the response
           setRecommendationCarData(data.recommendedCars?.data || []);

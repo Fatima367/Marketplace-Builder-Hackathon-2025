@@ -2,10 +2,14 @@ import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 
 export default async function SearchResults(debouncedQuery?: string) {
-  if (!debouncedQuery || debouncedQuery.trim() === "") {
-    // Return all cars when query is empty
-    return await client.fetch(
-      groq`*[_type == "car"]{
+  const query = debouncedQuery ? debouncedQuery : "";
+
+  try {
+    const cars = await client.fetch(
+      groq`*[ 
+        _type == "car" &&
+        name match $query
+      ]{
         _id,
         name,
         rentPerDay,
@@ -15,26 +19,14 @@ export default async function SearchResults(debouncedQuery?: string) {
             url
           }
         }
-      }`
+      }`,
+      { query: `*${query}*` as any }
     );
-  }
 
-  const query = `*${debouncedQuery}*`;
-  return await client.fetch(
-    groq`*[ 
-      _type == "car" &&
-      name match $query
-    ]{
-      _id,
-      name,
-      rentPerDay,
-      slug,
-      image {
-        asset -> {
-          url
-        }
-      }
-    }`,
-    { query } as any
-  );
+    console.log("Search results:", cars); // Log results
+    return cars;
+  } catch (error) {
+    console.error("Search error:", error); // Log errors
+    return [];
+  }
 }

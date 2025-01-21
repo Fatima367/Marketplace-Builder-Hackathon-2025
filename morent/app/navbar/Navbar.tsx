@@ -13,7 +13,6 @@ export default function Navbar() {
       localStorage.getItem("carRentWishlist") || "[]"
     );
     setWishlist(favItems);
-    console.log("Product passed to Wishlist:", favItems);
   }, []);
 
   const handleDelete = (itemId: string) => {

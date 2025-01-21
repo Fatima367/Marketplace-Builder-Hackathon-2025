@@ -17,7 +17,6 @@ export default function PopularCarSection({
       try {
         const response = await fetch("/api/cars");
         const data = await response.json();
-        console.log(data);
 
         if (response.ok) {
           setPopularCarData(data.popularCars?.data || []);
