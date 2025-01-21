@@ -136,7 +136,7 @@ export default function Home() {
             </div>
 
             {/*Car Cards*/}
-            <PopularCarSection cars={popularCarData} carCardsNo={4} />
+            <PopularCarSection carCardsNo={4} />
           </div>
         </div>
 
@@ -154,7 +154,7 @@ export default function Home() {
 
             {/*Car Cards*/}
 
-            <RecommendationCar cars={recommendedCarData} carCardsNo={8} />
+            <RecommendationCar carCardsNo={8} />
 
             <div className="flex items-center justify-center my-16 mx-auto">
               <Link href="/car-rent">
