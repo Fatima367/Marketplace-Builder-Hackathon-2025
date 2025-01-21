@@ -58,13 +58,17 @@ const CarRent = () => {
           <ToastContainer hideProgressBar />
           <div className="flex flex-col lg:space-y-8 space-y-4 mx-auto">
             {/* Row 1 */}
-            <CarRentPopularCarSection cars={popularCarData} carCardsNo={3} />
-
+            {popularCarData.length > 0 && (
+              <CarRentPopularCarSection cars={popularCarData} carCardsNo={3} />
+            )
+            }
             {/* Row 2 */}
+            {recommendationCarData.length > 0 && (
             <CarRentRecommendationCar
               cars={recommendationCarData}
               carCardsNo={6}
             />
+            )}
           </div>
 
           <div className="flex items-center justify-center mt-16 mb-16 mx-auto">

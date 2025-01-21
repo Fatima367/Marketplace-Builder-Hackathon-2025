@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build || true",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -18,7 +18,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.473.0",
-    "next": "15.1.5",
+    "next": "^15.1.5",
     "next-sanity": "^9.8.39",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
