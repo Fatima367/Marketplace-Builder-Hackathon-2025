@@ -4,7 +4,6 @@ import FavIcon from "./favIcon";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-
 export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
   const searchParams = useSearchParams();
 
@@ -22,17 +21,17 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
           ? selectedCategories.includes(car.category)
           : true; // If no categories are selected, include all cars
         const matchesCapacity = selectedCapacities.length
-          ? selectedCapacities.includes(car.capacity)
+          ? selectedCapacities.includes(car.capacity.toString())
           : true; // If no capacities are selected, include all cars
 
         return matchesCategory && matchesCapacity;
       })
-    : [];
+    : []; // If `cars` is not an array, return an empty array
 
   const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
 
   if (carsToDisplay.length === 0) {
-    return <div>No cars available</div>;
+    return <div className="text-[#90A3BF]">No cars available</div>;
   }
 
   return (
@@ -120,7 +119,6 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
   );
 }
 
-
 export function CarRentRecommendationCar({ cars, carCardsNo }: any) {
   const searchParams = useSearchParams();
 
@@ -129,18 +127,20 @@ export function CarRentRecommendationCar({ cars, carCardsNo }: any) {
   const selectedCapacities = searchParams.getAll("capacity");
 
   // Filter cars based on selected categories and selected capacities
-  const filteredCars = cars.filter((car: any) => {
-    const matchesCategory = selectedCategories.length
-      ? selectedCategories.includes(car.category)
-      : true; // If no categories are selected, include all cars
-    const matchesCapacity = selectedCapacities.length
-      ? selectedCapacities.includes(car.capacity)
-      : true; // If no capacities are selected, include all cars
+  const filteredPopularCars = Array.isArray(cars)
+    ? cars.filter((car: any) => {
+        const matchesCategory = selectedCategories.length
+          ? selectedCategories.includes(car.category)
+          : true; // If no categories are selected, include all cars
+        const matchesCapacity = selectedCapacities.length
+          ? selectedCapacities.includes(car.capacity.toString())
+          : true; // If no capacities are selected, include all cars
 
-    return matchesCategory && matchesCapacity;
-  });
+        return matchesCategory && matchesCapacity;
+      })
+    : []; // If `cars` is not an array, return an empty array
 
-  const carsToDisplay = filteredCars.slice(0, carCardsNo);
+  const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
 
   return (
     <div>
@@ -234,18 +234,24 @@ export function DetailCarRecentCars({ cars, carCardsNo }: any) {
   const selectedCapacities = searchParams.getAll("capacity");
 
   // Filter cars based on selected categories and selected capacities
-  const filteredPopularCars = cars.filter((car: any) => {
-    const matchesCategory = selectedCategories.length
-      ? selectedCategories.includes(car.category)
-      : true; // If no categories are selected, include all cars
-    const matchesCapacity = selectedCapacities.length
-      ? selectedCapacities.includes(car.capacity)
-      : true; // If no capacities are selected, include all cars
+  const filteredPopularCars = Array.isArray(cars)
+    ? cars.filter((car: any) => {
+        const matchesCategory = selectedCategories.length
+          ? selectedCategories.includes(car.category)
+          : true; // If no categories are selected, include all cars
+        const matchesCapacity = selectedCapacities.length
+          ? selectedCapacities.includes(car.capacity.toString())
+          : true; // If no capacities are selected, include all cars
 
-    return matchesCategory && matchesCapacity;
-  });
+        return matchesCategory && matchesCapacity;
+      })
+    : []; // If `cars` is not an array, return an empty array
 
   const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
+
+  if (carsToDisplay.length === 0) {
+    return <div className="text-[#90A3BF]">No cars available</div>;
+  }
 
   return (
     <div className="flex flex-col space-y-4 relative lg:w-[100%]">
@@ -350,16 +356,18 @@ export function DetailCarRecommendations({ cars, carCardsNo }: any) {
   const selectedCapacities = searchParams.getAll("capacity");
 
   // Filter cars based on selected categories and selected capacities
-  const filteredCars = cars.filter((car: any) => {
-    const matchesCategory = selectedCategories.length
-      ? selectedCategories.includes(car.category)
-      : true; // If no categories are selected, include all cars
-    const matchesCapacity = selectedCapacities.length
-      ? selectedCapacities.includes(car.capacity)
-      : true; // If no capacities are selected, include all cars
+  const filteredCars = Array.isArray(cars)
+    ? cars.filter((car: any) => {
+        const matchesCategory = selectedCategories.length
+          ? selectedCategories.includes(car.category)
+          : true; // If no categories are selected, include all cars
+        const matchesCapacity = selectedCapacities.length
+          ? selectedCapacities.includes(car.capacity.toString())
+          : true; // If no capacities are selected, include all cars
 
-    return matchesCategory && matchesCapacity;
-  });
+        return matchesCategory && matchesCapacity;
+      })
+    : []; // If `cars` is not an array, return an empty array
 
   const carsToDisplay = filteredCars.slice(0, carCardsNo);
 

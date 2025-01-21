@@ -1,52 +1,57 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import FavIcon from "./favIcon";
-import { CarListProps } from "@/lib/types";
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+import { useEffect, useState } from "react";
 
-const POPULAR_CAR_QUERY = defineQuery(`*[
-  _type == "car"
-  && "popular" in tags[] && defined(_id)
-]{
-  _id,
-  name,
-  rentPerDay,
-  originalPrice,
-  capacity,
-  mode,
-  fuel,
-  category,
-  slug,
-  image {
-    asset -> {
-      _id,
-      url
-    }
-  },
-  _createdAt,
-  _updatedAt
-}|order(_createdAt desc)`);
+export default function PopularCarSection({
+  carCardsNo,
+}: {
+  carCardsNo: number;
+}) {
+  const [popularCarData, setPopularCarData] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-export const { data: popularCarList } = await sanityFetch({
-  query: POPULAR_CAR_QUERY,
-});
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await fetch("/api/cars");
+        const data = await response.json();
+        console.log(data);
 
+        if (response.ok) {
+          setPopularCarData(data.popularCars?.data || []);
+        } else {
+          throw new Error(data.message || "Failed to fetch cars.");
+        }
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Something went wrong"
+        );
+      }
+    };
 
-export default async function PopularCarSection({ carCardsNo }: CarListProps) {
-  const cars = popularCarList.slice(0, carCardsNo);
+    fetchCars();
+  }, []);
+
+  if (error) {
+    return <div className="text-[#90A3BF] bg-[#F6F7F9]">Error: {error}</div>;
+  }
+
+  // Get the cars to display based on the carCardsNo
+  const carsToDisplay = popularCarData.slice(0, carCardsNo);
 
   return (
     <div>
-      {/*Car Cards*/}
+      {/* Car Cards */}
       <div
         className="relative flex sm:grid-cols-2 lg:grid-cols-4 md:grid md:grid-cols-2 gap-6
-           overflow-x-auto lg:overflow-visible mb-8 lg:w-full w-80 md:w-[680px] max-lg:justify-items-center"
+                overflow-x-auto lg:overflow-visible mb-8 lg:w-full w-80 md:w-[680px] max-lg:justify-items-center"
       >
-        {cars.map((car: any) => (
+        {carsToDisplay.map((car: any) => (
           <div
             className="bg-white rounded-lg flex flex-col p-6 relative flex-shrink-0 lg:flex-shrink
-              w-[304px] md:w-full lg:w-auto shadow-sm"
+                        w-[304px] md:w-full lg:w-auto shadow-sm"
             key={car._id}
           >
             <div className="flex items-start justify-between">
@@ -56,7 +61,6 @@ export default async function PopularCarSection({ carCardsNo }: CarListProps) {
                   {car.category}
                 </p>
               </div>
-
               <FavIcon car={car} />
             </div>
 
@@ -116,7 +120,7 @@ export default async function PopularCarSection({ carCardsNo }: CarListProps) {
               <Link href="/car-rent">
                 <button
                   className="text-base font-medium text-center gap-2 h-11 w-28
-                     text-white bg-[#3563E9] hover:bg-blue-800 rounded"
+                                    text-white bg-[#3563E9] hover:bg-blue-800 rounded"
                 >
                   Rent Now
                 </button>
