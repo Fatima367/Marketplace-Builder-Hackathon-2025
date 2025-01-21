@@ -4,9 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { SearchBar } from "../components/searchBar";
-import { useRouter } from "next/router";
 
-export default function Navbar({ cars }: any) {
+export default function Navbar() {
   const [wishlist, setWishlist] = useState<any[]>([]);
 
   useEffect(() => {
