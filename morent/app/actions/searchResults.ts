@@ -23,10 +23,8 @@ export default async function SearchResults(debouncedQuery?: string) {
       { query: `*${query}*` as any }
     );
 
-    console.log("Search results:", cars); // Log results
     return cars;
   } catch (error) {
-    console.error("Search error:", error); // Log errors
     return [];
   }
 }
