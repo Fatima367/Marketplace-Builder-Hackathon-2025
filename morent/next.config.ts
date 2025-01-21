@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "placehold.co" },
     ],
   },
+  reactStrictMode: false,
   eslint: { ignoreDuringBuilds: true }
  
 };

@@ -10,6 +10,9 @@ import PopularCarSection, { popularCarList } from "./components/popular-car";
 import HomePagePickAndDropForm from "./components/pickNdrop-form";
 
 export default function Home() {
+  const popularCarData = popularCarList;
+  const recommendedCarData = recommendedCarList;
+
   return (
     <section className="bg-[#F6F7F9] font-PlusJakartaSans relative">
       <Navbar />
@@ -133,7 +136,7 @@ export default function Home() {
             </div>
 
             {/*Car Cards*/}
-            <PopularCarSection cars={popularCarList} carCardsNo={4} />
+            <PopularCarSection cars={popularCarData} carCardsNo={4} />
           </div>
         </div>
 
@@ -151,7 +154,7 @@ export default function Home() {
 
             {/*Car Cards*/}
 
-            <RecommendationCar cars={recommendedCarList} carCardsNo={8} />
+            <RecommendationCar cars={recommendedCarData} carCardsNo={8} />
 
             <div className="flex items-center justify-center my-16 mx-auto">
               <Link href="/car-rent">

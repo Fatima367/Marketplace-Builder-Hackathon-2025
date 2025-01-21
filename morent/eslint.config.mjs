@@ -23,6 +23,7 @@ const eslintConfig = [
       "no-debugger": "off",
       "react/prop-types": "off",
       "react/jsx-no-undef": "off",
+      "react/react-in-jsx-scope": "off",
     },
   },
 ];
