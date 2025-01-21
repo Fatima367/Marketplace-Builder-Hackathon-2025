@@ -1,13 +1,14 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image"; // For the search and filter images
+import Image from "next/image";
 import SearchResults from "../actions/searchResults";
 
 interface SearchSuggestion {
   text: string;
   slug?: any;
 }
+
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
