@@ -1,35 +1,40 @@
-import { client } from "@/sanity/lib/client"; 
+import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 
-// Fetch the cars based on the search query (debounced query)
-export default function SearchResults(debouncedQuery?: string) {
-  // If no query is provided, return all cars
-  const query = debouncedQuery ? debouncedQuery : "";
+export default async function SearchResults(debouncedQuery?: string) {
+  if (!debouncedQuery || debouncedQuery.trim() === "") {
+    // Return all cars when query is empty
+    return await client.fetch(
+      groq`*[_type == "car"]{
+        _id,
+        name,
+        rentPerDay,
+        slug,
+        image {
+          asset -> {
+            url
+          }
+        }
+      }`
+    );
+  }
 
-  // GROQ query to fetch cars that match the search query
-  return client.fetch(
-    groq`*[
+  const query = `*${debouncedQuery}*`;
+  return await client.fetch(
+    groq`*[ 
       _type == "car" &&
       name match $query
     ]{
       _id,
       name,
       rentPerDay,
-      originalPrice,
-      capacity,
-      mode,
-      fuel,
-      category,
       slug,
       image {
         asset -> {
-          _id,
           url
         }
-      },
-      _createdAt,
-      _updatedAt
+      }
     }`,
-    { query: `*${query}*` as any} // Use wildcards to search for cars that contain the query string
+    { query } as any
   );
 }
