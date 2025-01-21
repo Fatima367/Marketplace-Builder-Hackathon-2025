@@ -11,6 +11,11 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {ignorePatterns: [
+    "*.mjs", // Ignore all .mjs files
+    ".next/*", // Ignore the Next.js build output
+    "node_modules/*", // Ignore node_modules (you can specify other folders too)
+  ],},
   {
     rules: {
       "no-console": "off",
