@@ -11,9 +11,6 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
   const selectedCategories = searchParams.getAll("category");
   const selectedCapacities = searchParams.getAll("capacity");
 
-  console.log("Selected Categories:", selectedCategories);
-  console.log("Selected Capacities:", selectedCapacities);
-
   // Filter cars based on selected categories and selected capacities
   const filteredPopularCars = Array.isArray(cars)
     ? cars.filter((car: any) => {
@@ -29,10 +26,6 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
     : []; // If `cars` is not an array, return an empty array
 
   const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
-
-  if (carsToDisplay.length === 0) {
-    return <div className="text-[#90A3BF]">No cars available</div>;
-  }
 
   return (
     <div>
@@ -248,10 +241,6 @@ export function DetailCarRecentCars({ cars, carCardsNo }: any) {
     : []; // If `cars` is not an array, return an empty array
 
   const carsToDisplay = filteredPopularCars.slice(0, carCardsNo);
-
-  if (carsToDisplay.length === 0) {
-    return <div className="text-[#90A3BF]">No cars available</div>;
-  }
 
   return (
     <div className="flex flex-col space-y-4 relative lg:w-[100%]">

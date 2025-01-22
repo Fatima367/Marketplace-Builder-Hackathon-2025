@@ -8,7 +8,7 @@ interface Location {
   display_name: string;
 }
 
-const API_KEY = process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY;
+const API_KEY = process.env.LOCATIONIQ_API_KEY;
 
 export default function HomePagePickAndDropForm() {
   const [pickupLocation, setPickupLocation] = useState<string>("");
@@ -28,7 +28,7 @@ export default function HomePagePickAndDropForm() {
     setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
     setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    if (query.length < 3) return;
+    if (query.length < 2) return;
     try {
       const response = await axios.get(
         `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${query}&format=json`
@@ -113,7 +113,10 @@ export default function HomePagePickAndDropForm() {
                   )
                 }
                 placeholder="Select your city"
-                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF] placeholder:font-medium"
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
+                text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md 
+                focus:outline-none focus:border-none placeholder:text-[#90A3BF] 
+                placeholder:font-medium"
               />
               {showPickupSuggestions && pickupSuggestions.length > 0 && (
                 <ul
@@ -252,6 +255,80 @@ export default function HomePagePickAndDropForm() {
 }
 
 export function PickAndDropForm() {
+  const [pickupLocation, setPickupLocation] = useState<string>("");
+  const [dropoffLocation, setDropoffLocation] = useState<string>("");
+  const [pickupSuggestions, setPickupSuggestions] = useState<Location[]>([]);
+  const [dropoffSuggestions, setDropoffSuggestions] = useState<Location[]>([]);
+  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
+  const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false);
+
+  const pickupRef = useRef<HTMLInputElement | null>(null);
+  const dropoffRef = useRef<HTMLInputElement | null>(null);
+  const pickupSuggestionsRef = useRef<HTMLUListElement | null>(null);
+  const dropoffSuggestionsRef = useRef<HTMLUListElement | null>(null);
+
+  const handleLocationSearch = async (
+    query: string,
+    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
+    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    if (query.length < 3) return;
+    try {
+      const response = await axios.get(
+        `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${query}&format=json`
+      );
+      setSuggestions(response.data);
+      setShowSuggestions(true);
+    } catch (error) {
+      console.error("Error fetching location suggestions:", error);
+    }
+  };
+
+  const handleLocationInput = (
+    event: ChangeEvent<HTMLInputElement>,
+    setLocation: React.Dispatch<React.SetStateAction<string>>,
+    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
+    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const { value } = event.target;
+    setLocation(value);
+    handleLocationSearch(value, setSuggestions, setShowSuggestions);
+  };
+
+  const handleSelectLocation = (
+    location: Location,
+    setLocation: React.Dispatch<React.SetStateAction<string>>,
+    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
+    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    setLocation(location.display_name);
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      (pickupRef.current &&
+        !pickupRef.current.contains(event.target as Node) &&
+        pickupSuggestionsRef.current &&
+        !pickupSuggestionsRef.current.contains(event.target as Node)) ||
+      (dropoffRef.current &&
+        !dropoffRef.current.contains(event.target as Node) &&
+        dropoffSuggestionsRef.current &&
+        !dropoffSuggestionsRef.current.contains(event.target as Node))
+    ) {
+      setShowPickupSuggestions(false);
+      setShowDropoffSuggestions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
       className="flex flex-col lg:flex-row lg:items-center lg:gap-x-4 lg:-space-y-0 lg:-space-x-6
@@ -273,12 +350,46 @@ export function PickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
-              <select
+              <input
+                ref={pickupRef}
+                type="text"
+                value={pickupLocation}
+                onChange={(e) =>
+                  handleLocationInput(
+                    e,
+                    setPickupLocation,
+                    setPickupSuggestions,
+                    setShowPickupSuggestions
+                  )
+                }
+                placeholder="Select your city"
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
-           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your city</option>
-              </select>
+           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF] 
+                placeholder:font-medium"
+              />
+              {showPickupSuggestions && pickupSuggestions.length > 0 && (
+                <ul
+                  ref={pickupSuggestionsRef}
+                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                >
+                  {pickupSuggestions.map((suggestion) => (
+                    <li
+                      key={suggestion.place_id}
+                      onClick={() =>
+                        handleSelectLocation(
+                          suggestion,
+                          setPickupLocation,
+                          setPickupSuggestions,
+                          setShowPickupSuggestions
+                        )
+                      }
+                      className="p-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      {suggestion.display_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
@@ -340,12 +451,47 @@ export function PickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
-              <select
+              <input
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
-          text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your city</option>
-              </select>
+          text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md
+          focus:outline-none focus:border-none placeholder:text-[#90A3BF]
+           placeholder:font-medium"
+                ref={dropoffRef}
+                type="text"
+                value={dropoffLocation}
+                onChange={(e) =>
+                  handleLocationInput(
+                    e,
+                    setDropoffLocation,
+                    setDropoffSuggestions,
+                    setShowDropoffSuggestions
+                  )
+                }
+                placeholder="Select your city"
+              />
+              {showDropoffSuggestions && dropoffSuggestions.length > 0 && (
+                <ul
+                  ref={dropoffSuggestionsRef}
+                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                >
+                  {dropoffSuggestions.map((suggestion) => (
+                    <li
+                      key={suggestion.place_id}
+                      onClick={() =>
+                        handleSelectLocation(
+                          suggestion,
+                          setDropoffLocation,
+                          setDropoffSuggestions,
+                          setShowDropoffSuggestions
+                        )
+                      }
+                      className="p-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      {suggestion.display_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">

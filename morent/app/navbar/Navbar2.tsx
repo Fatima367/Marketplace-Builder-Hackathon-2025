@@ -4,6 +4,8 @@ import { XMarkIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
+import Filters from "../components/filters";
+import { SearchBarMobile } from "../components/searchBar";
 
 export default function Navbar2() {
   const [wishlist, setWishlist] = useState<any[]>([]);
@@ -34,6 +36,10 @@ export default function Navbar2() {
   const decreaseProgress = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // Prevent triggering the parent click
     setProgress((prev) => Math.max(prev - 10, 0));
+  };
+
+  const handleSearch = (query: string) => {
+    console.log("Searching for:", query);
   };
 
   return (
@@ -146,28 +152,7 @@ export default function Navbar2() {
           className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4
          md:mt-14"
         >
-          <div
-            className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
-           lg:rounded-full rounded-md ring-1 ring-[#C3D4E9] ring-opacity-70 
-           px-4 relative"
-          >
-            <button>
-              <Image
-                src="/images/search-normal.png"
-                height={24}
-                width={24}
-                alt="search"
-              />
-            </button>
-
-            <input
-              type="text"
-              className="absolute bg-transparent lg:w-80 h-10 w-full
-         placeholder:text-sm placeholder:text-[#596780] placeholder:font-medium placeholder:mx-4
-         ml-10 border-0 border-transparent focus-visible:outline-none focus-visible:ring-0"
-              placeholder="Search something here"
-            />
-          </div>
+          <SearchBarMobile onSearch={handleSearch} />
           <div
             className="rounded-md ring-1 ring-[#C3D4E9] ring-opacity-70
         h-10 w-9 flex items-center justify-center relative"
@@ -193,85 +178,7 @@ export default function Navbar2() {
             </button>
           </div>
           {showFilter && (
-            <ul
-              className="right-4 flex flex-col bg-white absolute py-4 z-50 shadow-md rounded-md
-                        top-44 px-6 md:top-32 md:right-6"
-            >
-              <li className="flex flex-col space-y-4 mt-5">
-                <p className="text-[#90A3BF] text-base">T Y P E</p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" checked /> Sport{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(10)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" checked /> SUV{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(12)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> MPV{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(16)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> Sedan{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(20)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> Cope{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(14)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> Hatchback{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(14)</span>
-                </p>
-              </li>
-
-              <li className="flex flex-col space-y-4 mt-10">
-                <p className="text-[#90A3BF] text-base">C A P A C I T Y</p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" checked /> 2 People{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(10)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> 4 People{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(14)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" /> 6 People{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(12)</span>
-                </p>
-                <p className="text-xl font-medium">
-                  <Checkbox className="mr-2" checked /> 8 People{" "}
-                  <span className="ml-2 text-[#90A3BF] text-base">(16)</span>
-                </p>
-              </li>
-
-              <li className="flex flex-col space-y-4 mt-10">
-                <p className="text-[#90A3BF] text-base">P R I C E</p>
-
-                {/* Progress bar */}
-                <div
-                  className="relative w-full h-2 bg-gray-300 rounded overflow-hidden
-                          hover:cursor-pointer"
-                  onClick={increaseProgress}
-                >
-                  <div
-                    className="h-full bg-blue-500 transition-all duration-300"
-                    style={{ width: `${progress}%` }}
-                  ></div>
-
-                  <div
-                    className="absolute -right-2 w-4 h-4 bg-blue-500 rounded-full ring-4
-                               ring-white z-50 top-0 "
-                    style={{ left: `${progress}%` }}
-                    onClick={decreaseProgress}
-                  ></div>
-                </div>
-
-                <p className="text-xl font-medium text-[#596780]">
-                  Max. $100.00
-                </p>
-              </li>
-            </ul>
+            <Filters />
           )}
         </div>
       </div>

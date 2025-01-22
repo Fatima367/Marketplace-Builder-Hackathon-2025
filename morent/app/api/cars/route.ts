@@ -23,7 +23,7 @@ const POPULAR_CAR_QUERY = defineQuery(`*[
   },
   _createdAt,
   _updatedAt
-}|order(_createdAt desc)`);
+}|order(_createdAt)`);
 
 const RECOMMENDATION_CAR_QUERY = defineQuery(`*[ 
   _type == "car" && 
@@ -46,7 +46,7 @@ const RECOMMENDATION_CAR_QUERY = defineQuery(`*[
   },
   _createdAt,
   _updatedAt
-}|order(_createdAt desc)`);
+}|order(_createdAt)`);
 
 export async function GET(req: Request, res: Response) {
   try {

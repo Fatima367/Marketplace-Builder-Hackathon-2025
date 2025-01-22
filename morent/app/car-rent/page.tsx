@@ -10,6 +10,7 @@ import {
   CarRentRecommendationCar,
 } from "../components/car-rent-carGrids";
 import { PickAndDropForm } from "../components/pickNdrop-form";
+import { FaCar } from "react-icons/fa";
 
 const CarRent = () => {
   const [popularCarData, setPopularCarData] = useState<any[]>([]);
@@ -21,7 +22,6 @@ const CarRent = () => {
       try {
         const response = await fetch("/api/cars");
         const data = await response.json();
-        console.log(data);
 
         if (response.ok) {
           setPopularCarData(data.popularCars?.data || []);
@@ -33,7 +33,7 @@ const CarRent = () => {
         setError(
           error instanceof Error ? error.message : "Something went wrong"
         );
-      } 
+      }
     };
 
     fetchCars();
@@ -58,17 +58,23 @@ const CarRent = () => {
           <ToastContainer hideProgressBar />
           <div className="flex flex-col lg:space-y-8 space-y-4 mx-auto">
             {/* Row 1 */}
-            {popularCarData.length > 0 && (
-              <CarRentPopularCarSection cars={popularCarData} carCardsNo={3} />
-            )
-            }
-            {/* Row 2 */}
-            {recommendationCarData.length > 0 && (
-            <CarRentRecommendationCar
-              cars={recommendationCarData}
-              carCardsNo={6}
-            />
+            {popularCarData.length && recommendationCarData.length > 0 ? (
+              <>
+                <CarRentPopularCarSection
+                  cars={popularCarData}
+                  carCardsNo={3}
+                />
+                <CarRentRecommendationCar
+                  cars={recommendationCarData}
+                  carCardsNo={6}
+                />
+              </>
+            ) : (
+              <div className="text-[#90A3BF] flex gap-2 items-center">
+                <FaCar className="h-4 w-4" /> No cars available{" "}
+              </div>
             )}
+            {/* Row 2 */}
           </div>
 
           <div className="flex items-center justify-center mt-16 mb-16 mx-auto">

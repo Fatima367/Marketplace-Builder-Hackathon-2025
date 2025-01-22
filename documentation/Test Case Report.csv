@@ -1,0 +1,16 @@
+Test Case ID ,Feature/Module ,Test Case Description ,Test Steps ,Expected Result ,Actual Result ,Status ,Remarks 
+TC001 ,Product Listing ,Verify all products display correctly. ,Navigated to the pages having product listings. ,All products are displayed correctly. ,Got the expected results ,Passed ,No issues found. 
+TC002 ,Search Functionality ,Verify the search feature returns relevant results. ,"1. Entered ""Audi"" in the search bar.  ",Only Audi displayed in the results. ,Got the expected results ,Passed ,Works as expected 
+TC003 ,Filter Functionality ,Verify filters work as intended. ,Applied category filters ,Products are sorted by category. ,Cars appeared with selected categories ,Passed ,Works as expected 
+TC004 ,Wishlist Operations ,Verify adding cars to the wish list. ,"1. Added a car to the wish list. 
+2. Verified it appears in the wishlist. ",The product appears in the wishlist. ,Got the expected results ,Passed ,No issues found 
+TC005 ,Dynamic Routing ,Verify product detail pages load correctly. ,"1. Clicked on a car.  
+2. Verified the detail page loads with relative information ",Product detail page loads with correct details. ,Got the expected results ,Passed ,Rendered successfully 
+TC006 ,API error handling ,Verify error message on API failure. ,1. Disconnect API  ,Show fallback message ,Fallback message shown ,Passed ,Handled gracefully 
+,,,2. Refresh page ,,,,
+TC007 ,Performance Optimization ,Verify page load time is under 2 seconds. ,1. Run a Lighthouse audit.  ,Load time is was around 1s – 1.5s ,Got the expected results ,Passed ,Page loads under required time. 
+,,,2. Measure load time and performance score. ,, , ,
+TC008 ,Responsive Design ,Verify the site is responsive on different devices. ,1. Resize window layout (For different screen sizes) ,The layout adjusts correctly on all. ,Got the expected results ,Passed ,Responsiveness verified. 
+,,,,, , ,
+TC009 ,Cross-Browser Testing ,Verify functionality across major browsers. ,1. Test on Chrome and Edge. ,Site works consistently on all browsers. ,Got the expected results ,Passed ,Worked well. 
+,,,,, , , 

@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { SearchBar } from "../components/searchBar";
+import SearchBar from "../components/searchBar";
 
 export default function Navbar() {
   const [wishlist, setWishlist] = useState<any[]>([]);
@@ -52,54 +52,6 @@ export default function Navbar() {
         <div className="z-30">
           <SearchBar onSearch={handleSearch} />
         </div>
-        {/* <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
-          <div
-            className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
-         lg:rounded-full rounded-md ring-1 ring-[#C3D4E9] ring-opacity-70 
-         px-4 relative"
-          >
-            <button>
-              <Image
-                src="/images/search-normal.png"
-                height={24}
-                width={24}
-                alt="search"
-              />
-            </button>
-
-            <input
-              type="text"
-              className="absolute bg-transparent lg:w-80 h-10
-       placeholder:text-sm placeholder:text-[#596780] placeholder:font-medium placeholder:mx-4
-       ml-10 border-0 border-transparent focus-visible:outline-none focus-visible:ring-0"
-              placeholder="Search something here"
-            />
-
-            <button>
-              <Image
-                src="/images/filter.png"
-                height={24}
-                width={24}
-                alt="filter"
-                className="hidden lg:flex"
-              />
-            </button>
-          </div>
-          <div
-            className=" rounded-md ring-1 ring-[#C3D4E9] ring-opacity-70 lg:hidden
-      h-10 w-9 flex items-center justify-center relative"
-          >
-            <button>
-              <Image
-                src="/images/filter.png"
-                height={24}
-                width={24}
-                alt="filter"
-                className="block lg:hidden"
-              />
-            </button>
-          </div>
-        </div> */}
       </div>
 
       {/* Profile and Notification */}
