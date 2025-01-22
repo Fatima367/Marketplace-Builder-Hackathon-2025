@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState, ChangeEvent, useRef, useEffect } from "react";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios"; 
 
 interface Location {
   place_id: string;
@@ -28,7 +28,7 @@ export default function HomePagePickAndDropForm() {
     setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
     setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    if (query.length < 2) return;
+    if (query.length < 3) return;
     try {
       const response = await axios.get(
         `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${query}&format=json`
