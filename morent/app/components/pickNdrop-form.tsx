@@ -1,89 +1,52 @@
 "use client";
 import Image from "next/image";
-import React, { useState, ChangeEvent, useRef, useEffect } from "react";
-import axios from "axios"; 
+import { useState } from "react";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-interface Location {
-  place_id: string;
-  display_name: string;
-}
-
-const API_KEY = process.env.LOCATIONIQ_API_KEY;
+// Function to fetch location data from PositionStack API
+const fetchPlaces = async (query: string) => {
+  const apiKey = process.env.NEXT_PUBLIC_POSITIONSTACK_API_KEY; // Replace with your PositionStack API Key
+  const response = await fetch(
+    `http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${encodeURIComponent(query)}`
+  );
+  const data = await response.json();
+  return data.data || []; // Return the `data` array from the API response
+};
 
 export default function HomePagePickAndDropForm() {
-  const [pickupLocation, setPickupLocation] = useState<string>("");
-  const [dropoffLocation, setDropoffLocation] = useState<string>("");
-  const [pickupSuggestions, setPickupSuggestions] = useState<Location[]>([]);
-  const [dropoffSuggestions, setDropoffSuggestions] = useState<Location[]>([]);
-  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
-  const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false);
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [dropoffLocation, setDropoffLocation] = useState("");
+  const [pickupSuggestions, setPickupSuggestions] = useState<any[]>([]);
+  const [dropoffSuggestions, setDropoffSuggestions] = useState<any[]>([]);
+  const [pickupDate, setPickupDate] = useState<Date | null>(null);
+  const [pickupTime, setPickupTime] = useState<string>("");
+  const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
+  const [dropoffTime, setDropoffTime] = useState<string>("");
 
-  const pickupRef = useRef<HTMLInputElement | null>(null);
-  const dropoffRef = useRef<HTMLInputElement | null>(null);
-  const pickupSuggestionsRef = useRef<HTMLUListElement | null>(null);
-  const dropoffSuggestionsRef = useRef<HTMLUListElement | null>(null);
-
-  const handleLocationSearch = async (
-    query: string,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+  const handleLocationChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setLocation: React.Dispatch<React.SetStateAction<string>>,
+    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
   ) => {
-    if (query.length < 3) return;
-    try {
-      const response = await axios.get(
-        `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${query}&format=json`
-      );
-      setSuggestions(response.data);
-      setShowSuggestions(true);
-    } catch (error) {
-      console.error("Error fetching location suggestions:", error);
+    const location = e.target.value;
+    setLocation(location);
+    if (location.length > 2) {
+      const places = await fetchPlaces(location);
+      setSuggestions(places); // Update suggestions
+    } else {
+      setSuggestions([]); // Clear suggestions if input is too short
     }
   };
 
-  const handleLocationInput = (
-    event: ChangeEvent<HTMLInputElement>,
+  const handleSuggestionClick = (
+    suggestion: any,
     setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
   ) => {
-    const { value } = event.target;
-    setLocation(value);
-    handleLocationSearch(value, setSuggestions, setShowSuggestions);
+    setLocation(suggestion.label); // Set the selected location
+    setSuggestions([]); // Clear suggestions after selection
   };
-
-  const handleSelectLocation = (
-    location: Location,
-    setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    setLocation(location.display_name);
-    setSuggestions([]);
-    setShowSuggestions(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      (pickupRef.current &&
-        !pickupRef.current.contains(event.target as Node) &&
-        pickupSuggestionsRef.current &&
-        !pickupSuggestionsRef.current.contains(event.target as Node)) ||
-      (dropoffRef.current &&
-        !dropoffRef.current.contains(event.target as Node) &&
-        dropoffSuggestionsRef.current &&
-        !dropoffSuggestionsRef.current.contains(event.target as Node))
-    ) {
-      setShowPickupSuggestions(false);
-      setShowDropoffSuggestions(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-x-4 lg:-space-y-0 lg:space-x-6 mb-9 items-center justify-center mx-auto relative lg:max-w-[100%] -space-y-2 md:flex-row lg:mt-16 md:mt-20 mt-6">
@@ -101,42 +64,38 @@ export default function HomePagePickAndDropForm() {
                 Locations
               </label>
               <input
-                ref={pickupRef}
                 type="text"
+                placeholder="Select your city"
                 value={pickupLocation}
                 onChange={(e) =>
-                  handleLocationInput(
+                  handleLocationChange(
                     e,
                     setPickupLocation,
-                    setPickupSuggestions,
-                    setShowPickupSuggestions
+                    setPickupSuggestions
                   )
                 }
-                placeholder="Select your city"
-                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
-                text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md 
-                focus:outline-none focus:border-none placeholder:text-[#90A3BF] 
-                placeholder:font-medium"
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF] placeholder:font-medium"
               />
-              {showPickupSuggestions && pickupSuggestions.length > 0 && (
+              {/* Suggestions dropdown */}
+              {pickupSuggestions.length > 0 && (
                 <ul
-                  ref={pickupSuggestionsRef}
-                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
+                top-32 left-0"
                 >
-                  {pickupSuggestions.map((suggestion) => (
+                  {pickupSuggestions.map((suggestion, index) => (
                     <li
-                      key={suggestion.place_id}
+                      key={index}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
-                        handleSelectLocation(
+                        handleSuggestionClick(
                           suggestion,
                           setPickupLocation,
-                          setPickupSuggestions,
-                          setShowPickupSuggestions
+                          setPickupSuggestions
                         )
                       }
-                      className="p-2 cursor-pointer hover:bg-gray-100"
                     >
-                      {suggestion.display_name}
+                      {suggestion.label}
                     </li>
                   ))}
                 </ul>
@@ -147,18 +106,25 @@ export default function HomePagePickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
-              <select className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md">
-                <option>Select your date</option>
-              </select>
+              <ReactDatePicker
+                selected={pickupDate}
+                onChange={(date) => setPickupDate(date)}
+                dateFormat="MM/dd/yyyy"
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
+                placeholderText="Select your date"
+              />
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
-              <select className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md">
-                <option>Select your time</option>
-              </select>
+              <input
+                type="time"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
+              />
             </div>
           </div>
         </div>
@@ -191,39 +157,38 @@ export default function HomePagePickAndDropForm() {
                 Locations
               </label>
               <input
-                ref={dropoffRef}
                 type="text"
+                placeholder="Select your city"
                 value={dropoffLocation}
                 onChange={(e) =>
-                  handleLocationInput(
+                  handleLocationChange(
                     e,
                     setDropoffLocation,
-                    setDropoffSuggestions,
-                    setShowDropoffSuggestions
+                    setDropoffSuggestions
                   )
                 }
-                placeholder="Select your city"
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF] placeholder:font-medium"
               />
-              {showDropoffSuggestions && dropoffSuggestions.length > 0 && (
+              {/* Suggestions dropdown */}
+              {dropoffSuggestions.length > 0 && (
                 <ul
-                  ref={dropoffSuggestionsRef}
-                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
+                top-32 left-0"
                 >
-                  {dropoffSuggestions.map((suggestion) => (
+                  {dropoffSuggestions.map((suggestion, index) => (
                     <li
-                      key={suggestion.place_id}
+                      key={index}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
-                        handleSelectLocation(
+                        handleSuggestionClick(
                           suggestion,
                           setDropoffLocation,
-                          setDropoffSuggestions,
-                          setShowDropoffSuggestions
+                          setDropoffSuggestions
                         )
                       }
-                      className="p-2 cursor-pointer hover:bg-gray-100"
                     >
-                      {suggestion.display_name}
+                      {suggestion.label}
                     </li>
                   ))}
                 </ul>
@@ -234,18 +199,25 @@ export default function HomePagePickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
-              <select className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md">
-                <option>Select your date</option>
-              </select>
+              <ReactDatePicker
+                selected={dropoffDate}
+                onChange={(date) => setDropoffDate(date)}
+                dateFormat="MM/dd/yyyy"
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
+                placeholderText="Select your date"
+              />
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
-              <select className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md">
-                <option>Select your time</option>
-              </select>
+              <input
+                type="time"
+                value={dropoffTime}
+                onChange={(e) => setDropoffTime(e.target.value)}
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
+              />
             </div>
           </div>
         </div>
@@ -255,79 +227,38 @@ export default function HomePagePickAndDropForm() {
 }
 
 export function PickAndDropForm() {
-  const [pickupLocation, setPickupLocation] = useState<string>("");
-  const [dropoffLocation, setDropoffLocation] = useState<string>("");
-  const [pickupSuggestions, setPickupSuggestions] = useState<Location[]>([]);
-  const [dropoffSuggestions, setDropoffSuggestions] = useState<Location[]>([]);
-  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
-  const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false);
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [dropoffLocation, setDropoffLocation] = useState("");
+  const [pickupSuggestions, setPickupSuggestions] = useState<any[]>([]);
+  const [dropoffSuggestions, setDropoffSuggestions] = useState<any[]>([]);
+  const [pickupDate, setPickupDate] = useState<Date | null>(null);
+  const [pickupTime, setPickupTime] = useState<string>("");
+  const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
+  const [dropoffTime, setDropoffTime] = useState<string>("");
 
-  const pickupRef = useRef<HTMLInputElement | null>(null);
-  const dropoffRef = useRef<HTMLInputElement | null>(null);
-  const pickupSuggestionsRef = useRef<HTMLUListElement | null>(null);
-  const dropoffSuggestionsRef = useRef<HTMLUListElement | null>(null);
-
-  const handleLocationSearch = async (
-    query: string,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+  const handleLocationChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setLocation: React.Dispatch<React.SetStateAction<string>>,
+    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
   ) => {
-    if (query.length < 3) return;
-    try {
-      const response = await axios.get(
-        `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${query}&format=json`
-      );
-      setSuggestions(response.data);
-      setShowSuggestions(true);
-    } catch (error) {
-      console.error("Error fetching location suggestions:", error);
+    const location = e.target.value;
+    setLocation(location);
+    if (location.length > 2) {
+      const places = await fetchPlaces(location);
+      setSuggestions(places); // Update suggestions
+    } else {
+      setSuggestions([]); // Clear suggestions if input is too short
     }
   };
 
-  const handleLocationInput = (
-    event: ChangeEvent<HTMLInputElement>,
+  const handleSuggestionClick = (
+    suggestion: any,
     setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
+    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
   ) => {
-    const { value } = event.target;
-    setLocation(value);
-    handleLocationSearch(value, setSuggestions, setShowSuggestions);
+    setLocation(suggestion.label); // Set the selected location
+    setSuggestions([]); // Clear suggestions after selection
   };
-
-  const handleSelectLocation = (
-    location: Location,
-    setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<Location[]>>,
-    setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    setLocation(location.display_name);
-    setSuggestions([]);
-    setShowSuggestions(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      (pickupRef.current &&
-        !pickupRef.current.contains(event.target as Node) &&
-        pickupSuggestionsRef.current &&
-        !pickupSuggestionsRef.current.contains(event.target as Node)) ||
-      (dropoffRef.current &&
-        !dropoffRef.current.contains(event.target as Node) &&
-        dropoffSuggestionsRef.current &&
-        !dropoffSuggestionsRef.current.contains(event.target as Node))
-    ) {
-      setShowPickupSuggestions(false);
-      setShowDropoffSuggestions(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div
@@ -336,7 +267,7 @@ export function PickAndDropForm() {
     >
       {/* Pick-Up */}
       <div
-        className="lg:flex-1 items-start justify-between bg-white shadow-md 
+        className="lg:flex-1 items-start justify-between bg-white shadow-md
        p-6 rounded-lg flex flex-col relative lg:h-36 lg:w-[28.5rem] w-[20rem]"
       >
         <div className="flex-1 items-start justify-between">
@@ -351,41 +282,40 @@ export function PickAndDropForm() {
                 Locations
               </label>
               <input
-                ref={pickupRef}
                 type="text"
+                placeholder="Select your city"
                 value={pickupLocation}
                 onChange={(e) =>
-                  handleLocationInput(
+                  handleLocationChange(
                     e,
                     setPickupLocation,
-                    setPickupSuggestions,
-                    setShowPickupSuggestions
+                    setPickupSuggestions
                   )
                 }
-                placeholder="Select your city"
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
-           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF] 
+           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md focus:outline-none focus:border-none placeholder:text-[#90A3BF]
                 placeholder:font-medium"
               />
-              {showPickupSuggestions && pickupSuggestions.length > 0 && (
+              {/* Suggestions dropdown */}
+              {pickupSuggestions.length > 0 && (
                 <ul
-                  ref={pickupSuggestionsRef}
-                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
+                top-32 left-0"
                 >
-                  {pickupSuggestions.map((suggestion) => (
+                  {pickupSuggestions.map((suggestion, index) => (
                     <li
-                      key={suggestion.place_id}
+                      key={index}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
-                        handleSelectLocation(
+                        handleSuggestionClick(
                           suggestion,
                           setPickupLocation,
-                          setPickupSuggestions,
-                          setShowPickupSuggestions
+                          setPickupSuggestions
                         )
                       }
-                      className="p-2 cursor-pointer hover:bg-gray-100"
                     >
-                      {suggestion.display_name}
+                      {suggestion.label}
                     </li>
                   ))}
                 </ul>
@@ -396,24 +326,27 @@ export function PickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
-              <select
+              <ReactDatePicker
+                selected={pickupDate}
+                onChange={(date) => setPickupDate(date)}
+                dateFormat="MM/dd/yyyy"
+                placeholderText="Select your date"
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
            text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your date</option>
-              </select>
+              />
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
-              <select
+              <input
+                type="time"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
            text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your time</option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -452,42 +385,41 @@ export function PickAndDropForm() {
                 Locations
               </label>
               <input
-                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md
           focus:outline-none focus:border-none placeholder:text-[#90A3BF]
            placeholder:font-medium"
-                ref={dropoffRef}
-                type="text"
                 value={dropoffLocation}
                 onChange={(e) =>
-                  handleLocationInput(
+                  handleLocationChange(
                     e,
                     setDropoffLocation,
-                    setDropoffSuggestions,
-                    setShowDropoffSuggestions
+                    setDropoffSuggestions
                   )
                 }
+                type="text"
                 placeholder="Select your city"
               />
-              {showDropoffSuggestions && dropoffSuggestions.length > 0 && (
+              {/* Suggestions dropdown */}
+              {dropoffSuggestions.length > 0 && (
                 <ul
-                  ref={dropoffSuggestionsRef}
-                  className="absolute bg-white shadow-md border mt-1 max-h-60 overflow-y-auto w-full z-20 lg:top-16 lg:left-0 top-32 left-1"
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
+                top-32 left-0"
                 >
-                  {dropoffSuggestions.map((suggestion) => (
+                  {dropoffSuggestions.map((suggestion, index) => (
                     <li
-                      key={suggestion.place_id}
+                      key={index}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
-                        handleSelectLocation(
+                        handleSuggestionClick(
                           suggestion,
                           setDropoffLocation,
-                          setDropoffSuggestions,
-                          setShowDropoffSuggestions
+                          setDropoffSuggestions
                         )
                       }
-                      className="p-2 cursor-pointer hover:bg-gray-100"
                     >
-                      {suggestion.display_name}
+                      {suggestion.label}
                     </li>
                   ))}
                 </ul>
@@ -498,24 +430,27 @@ export function PickAndDropForm() {
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
-              <select
-                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
+              <ReactDatePicker
+                selected={dropoffDate}
+                onChange={(date) => setDropoffDate(date)}
+                dateFormat="MM/dd/yyyy"
+                placeholderText="Select your date"
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
             text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your date</option>
-              </select>
+              />
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
               <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
-              <select
-                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium 
+              <input
+                type="time"
+                value={dropoffTime}
+                onChange={(e) => setDropoffTime(e.target.value)}
+                className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
             text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md"
-              >
-                <option>Select your time</option>
-              </select>
+              />
             </div>
           </div>
         </div>
