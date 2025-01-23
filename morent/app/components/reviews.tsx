@@ -123,7 +123,7 @@ export default function Reviews({ slug }: any) {
       ) : (
         reviews.slice(0, showAll ? reviews.length : 2).map((review: any) => (
           <div
-            key={review.id}
+            key={review._id}
             className="flex mt-6 items-start relative shadow-sm rounded-2xl"
           >
             <Image

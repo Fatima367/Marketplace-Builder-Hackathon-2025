@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
 export async function GET(request: Request) {
-  const { pathname } = new URL(request.url);
-  const slug = pathname.split("/").pop(); // Extracts the slug from the URL path
+  const { searchParams } = new URL(request.url);
+  const slug = searchParams.get("slug"); // Extracts the slug from the URL path
 
   if (!slug) {
     return NextResponse.json(
