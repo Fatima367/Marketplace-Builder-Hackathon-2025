@@ -115,7 +115,7 @@ export default function Reviews({ slug }: any) {
           <p className="text-gray-500">No reviews yet</p>
           <button
             onClick={() => setShowAll(true)}
-            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg"
+            className="mt-4 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
           >
             Add a Review
           </button>
@@ -227,7 +227,7 @@ export default function Reviews({ slug }: any) {
             </div>
             <button
               onClick={handleReviewSubmit}
-              className="mt-3 px-6 py-2 bg-blue-500 text-white rounded-lg"
+              className="mt-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
             >
               Submit Review
             </button>
