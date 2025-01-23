@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const slug = searchParams.get("slug");
+  const { pathname } = new URL(request.url);
+  const slug = pathname.split("/").pop(); // Extracts the slug from the URL path
 
   if (!slug) {
     return NextResponse.json(
@@ -12,28 +12,47 @@ export async function GET(request: Request) {
     );
   }
 
-  const query = `*[_type == "reviews" && carSlug == $slug] | order(date asc)`;
-  const reviews = await client.fetch(query, { slug });
+  try {
+    const query = `*[_type == "reviews" && carSlug == $slug] | order(date asc)`;
+    const reviews = await client.fetch(query, { slug });
 
-  return NextResponse.json(reviews);
+    if (reviews.length === 0) {
+      return NextResponse.json(
+        { message: "No reviews found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(reviews);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch reviews" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
   const body = await request.json();
 
-  if (!body.username || !body.text || !body.carSlug) {
+  // Validate required fields
+  if (!body.username || !body.text || !body.rating || !body.carSlug) {
     return NextResponse.json(
-      { error: "All fields are required" },
+      { error: "Missing required fields" },
       { status: 400 }
     );
   }
 
   const newReview = {
-    _type: "comment",
+    _type: "reviews",
     username: body.username,
     text: body.text,
-    carSlug: body.carSlug,
+    rating: body.rating,
     date: new Date().toISOString(),
+    carSlug: body.carSlug,
+    profileImage: body.profileImage || "/images/default-profile.png", // Fallback UI
+    occupation: body.occupation || "Unknown", // Fallback UI
   };
 
   try {

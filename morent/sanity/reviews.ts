@@ -25,6 +25,25 @@ const reviews = defineType({
       type: "string",
       title: "Car Slug",
     },
+    {
+      name: "rating",
+      type: "number",
+      title: "Rating",
+      validation: (Rule) => Rule.required().min(1).max(5),
+    },
+    {
+      name: "profileImage",
+      type: "image",
+      title: "Profile Image",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
+      name: "occupation",
+      type: "string",
+      title: "Occupation",
+    },
   ],
 });
 

@@ -365,7 +365,7 @@ export default async function DetailCarRent({
           </div>
 
           {/*Reviews*/}
-          <Reviews />
+          <Reviews slug={slug} />
 
           {/*Recent Car Section*/}
 
