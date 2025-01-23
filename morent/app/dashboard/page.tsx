@@ -210,13 +210,13 @@ const Dashboard = () => {
                     Details Rental
                   </p>
 
-                  <Image
-                    src="/images/Maps.png"
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m24!1m8!1m3!1d110199.80073250589!2d-97.814455!3d30.3298052!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x8644b599a0cc032f%3A0x5d9b464bd469d57a!2saustin!3m2!1d30.267152999999997!2d-97.7430608!4m5!1s0x865b34b516444121%3A0xaa3bc88ac36fdcbf!2sBull%20Creek%20District%20Park%2C%20Lakewood%20Drive%2C%20Austin%2C%20TX%2C%20USA!3m2!1d30.366905799999998!2d-97.7860809!5e0!3m2!1sen!2s!4v1736589971403!5m2!1sen!2s"
                     height={272}
                     width={486}
-                    alt="map"
-                    className="mt-6 mb-[38px] lg:w-[486px] w-[280px]"
-                  />
+                    title="map"
+                    className="mt-6 mb-[38px] lg:w-[486px] w-[280px] h-[272px] inset-0"
+                  ></iframe>
 
                   <div className="flex">
                     <div className="flex items-center justify-center lg:flex-row mt-8 relative">
