@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const fetchPlaces = async (query: string) => {
   const apiKey = process.env.NEXT_PUBLIC_POSITIONSTACK_API_KEY; // Replace with your PositionStack API Key
   const response = await fetch(
-    `http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${encodeURIComponent(query)}`
+    `https://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${encodeURIComponent(query)}`
   );
   const data = await response.json();
   return data.data || []; // Return the `data` array from the API response
