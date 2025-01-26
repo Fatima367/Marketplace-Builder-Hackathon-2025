@@ -106,23 +106,29 @@ export default function Navbar() {
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex gap-4 items-center">
-                        <Image
-                          src={item.image.asset.url}
-                          height={100}
-                          width={100}
-                          alt="item"
-                        />
+                        <Link href={`/detail-car-rent/${item.slug.current}`}>
+                          <Image
+                            src={item.image.asset.url}
+                            height={100}
+                            width={100}
+                            alt="item"
+                          />
+                        </Link>
                         <div className="flex flex-col gap-1">
-                          <h2 className="font-bold text-[#1A202C]">
-                            {item.name}
-                          </h2>
-                          <p className="font-bold text-sm text-[#90A3BF]">
-                            {item.category}
-                          </p>
-                          <div className="text-base font-bold">
-                            {item.rentPerDay}/{" "}
-                            <span className="text-sm text-[#90A3BF]">day</span>
-                          </div>
+                          <Link href={`/detail-car-rent/${item.slug.current}`}>
+                            <h2 className="font-bold text-[#1A202C]">
+                              {item.name}
+                            </h2>
+                            <p className="font-bold text-sm text-[#90A3BF]">
+                              {item.category}
+                            </p>
+                            <div className="text-base font-bold">
+                              {item.rentPerDay}/{" "}
+                              <span className="text-sm text-[#90A3BF]">
+                                day
+                              </span>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                       <AiOutlineDelete

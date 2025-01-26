@@ -47,14 +47,16 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
               <FavIcon car={car} />
             </div>
 
-            <Image
-              src={car.image.asset.url}
-              width={300}
-              height={100}
-              alt="car-image"
-              className="mt-16 w-64 h-auto object-cover mx-auto"
-              layout="responsive"
-            />
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
+              <Image
+                src={car.image.asset.url}
+                width={300}
+                height={100}
+                alt="car-image"
+                className="mt-16 w-64 h-auto object-cover mx-auto"
+                layout="responsive"
+              />
+            </Link>
 
             <div className="flex space-x-4 sm:flex-row mt-16 items-center justify-center -mx-2">
               <div className="flex space-x-1 items-center justify-center">
@@ -99,7 +101,7 @@ export function CarRentPopularCarSection({ cars, carCardsNo }: any) {
                 </div>
               </div>
 
-              <Link href="/car-rent">
+              <Link href={`/detail-car-rent/${car.slug.current}`}>
                 <button className="text-base font-medium text-center gap-2 h-11 w-28 text-white bg-[#3563E9] hover:bg-blue-800 rounded">
                   Rent Now
                 </button>
@@ -156,13 +158,15 @@ export function CarRentRecommendationCar({ cars, carCardsNo }: any) {
               </div>
               <FavIcon car={car} />
             </div>
-            <Image
-              width={300}
-              height={100}
-              src={car.image.asset.url}
-              alt="All New Rush"
-              className="self-center mt-16 mx-auto w-64 h-auto object-cover"
-            />
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
+              <Image
+                width={300}
+                height={100}
+                src={car.image.asset.url}
+                alt="All New Rush"
+                className="self-center mt-16 mx-auto w-64 h-auto object-cover"
+              />
+            </Link>
             <div className="flex space-x-4 sm:flex-row items-center justify-center -mx-2 mt-16 text-sm font-medium text-[#90A3BF]">
               <div className="flex space-x-1 items-center justify-center">
                 <Image
@@ -203,7 +207,7 @@ export function CarRentRecommendationCar({ cars, carCardsNo }: any) {
                 </div>
               </div>
 
-              <Link href="/car-rent">
+              <Link href={`/detail-car-rent/${car.slug.current}`}>
                 <button
                   className="text-base font-medium text-center gap-2 h-11 w-28
                      text-white bg-[#3563E9] hover:bg-blue-800 rounded"
@@ -273,13 +277,15 @@ export function DetailCarRecentCars({ cars, carCardsNo }: any) {
               <FavIcon car={car} />
             </div>
 
-            <Image
-              src={car.image.asset.url}
-              width={300}
-              height={100}
-              alt="car-image"
-              className="mt-16 w-64 h-auto object-cover mx-auto"
-            />
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
+              <Image
+                src={car.image.asset.url}
+                width={300}
+                height={100}
+                alt="car-image"
+                className="mt-16 w-64 h-auto object-cover mx-auto"
+              />
+            </Link>
 
             <div className="flex space-x-4 sm:flex-row mt-16 items-center justify-center -mx-2">
               <div className="flex space-x-1 items-center justify-center">
@@ -324,7 +330,7 @@ export function DetailCarRecentCars({ cars, carCardsNo }: any) {
                 </div>
               </div>
 
-              <Link href="/car-rent">
+              <Link href={`/detail-car-rent/${car.slug.current}`}>
                 <button className="text-base font-medium text-center gap-2 h-11 w-28 text-white bg-[#3563E9] hover:bg-blue-800 rounded">
                   Rent Now
                 </button>
@@ -367,9 +373,11 @@ export function DetailCarRecommendations({ cars, carCardsNo }: any) {
           <p className="text-base font-semibold text-[#90A3BF]">
             Recomendation Car
           </p>
-          <p className="text-base font-semibold text-[#3563E9] absolute right-3">
-            View All
-          </p>
+          <Link href="/car-rent">
+            <p className="text-base font-semibold text-[#3563E9] absolute right-3">
+              View All
+            </p>
+          </Link>
         </div>
       )}
 
@@ -396,13 +404,15 @@ export function DetailCarRecommendations({ cars, carCardsNo }: any) {
               </div>
               <FavIcon car={car} />
             </div>
-            <Image
-              width={300}
-              height={100}
-              src={car.image.asset.url}
-              alt="All New Rush"
-              className="self-center mt-16 mx-auto w-64 h-auto object-cover"
-            />
+            <Link href={`/detail-car-rent/${car.slug.current}`}>
+              <Image
+                width={300}
+                height={100}
+                src={car.image.asset.url}
+                alt="All New Rush"
+                className="self-center mt-16 mx-auto w-64 h-auto object-cover"
+              />
+            </Link>
             <div className="flex space-x-4 sm:flex-row items-center justify-center -mx-2 mt-16 text-sm font-medium text-[#90A3BF]">
               <div className="flex space-x-1 items-center justify-center">
                 <Image
@@ -443,7 +453,7 @@ export function DetailCarRecommendations({ cars, carCardsNo }: any) {
                 </div>
               </div>
 
-              <Link href="/car-rent">
+              <Link href={`/detail-car-rent/${car.slug.current}`}>
                 <button
                   className="text-base font-medium text-center gap-2 h-11 w-28
                        text-white bg-[#3563E9] hover:bg-blue-800 rounded"
