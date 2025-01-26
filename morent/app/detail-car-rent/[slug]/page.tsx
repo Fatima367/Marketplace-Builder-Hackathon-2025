@@ -350,7 +350,17 @@ export default async function DetailCarRent({
                     </div>
                   </div>
 
-                  <Link href="/payment">
+                  <Link
+                    href={{
+                      pathname: "/payment",
+                      query: {
+                        carName: name,
+                        rentPerDay,
+                        imageUrl,
+                        totalPrice: rentPerDay,
+                      },
+                    }}
+                  >
                     <button
                       className="lg:px-8 px-5 mt-1 text-base font-medium text-center gap-2
                      text-white bg-[#3563E9] hover:bg-blue-800 rounded lg:h-14 h-11

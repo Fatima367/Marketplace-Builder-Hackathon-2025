@@ -5,7 +5,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // Function to fetch location data from PositionStack API
-const fetchPlaces = async (query: string) => {
+export const fetchPlaces = async (query: string) => {
   const apiKey = process.env.NEXT_PUBLIC_POSITIONSTACK_API_KEY; // Replace with your PositionStack API Key
   const response = await fetch(
     `https://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${encodeURIComponent(query)}`
