@@ -1,18 +1,12 @@
 "use client";
-import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { Suspense } from "react";
 import Navbar from "../navbar/Navbar";
 import NavbarMobile2 from "../navbar/NavbarMobile2";
-import { MdCheckCircle } from "react-icons/md";
 import { useSearchParams } from "next/navigation";
-import CheckOut from "../actions/checkout";
-import { fetchPlaces } from "../components/pickNdrop-form";
-import ReactDatePicker from "react-datepicker";
 import BookingForm from "../components/bookingForm";
 
-const Payment = () => {
+const PaymentPage = () => {
   const searchParams = useSearchParams();
 
   // Extract query parameters from the URL
@@ -237,5 +231,17 @@ const Payment = () => {
     </div>
   );
 };
+
+const Payment = () => (
+  <Suspense
+    fallback={
+      <div className="text-[#90A3BF] flex justify-center mt-5 bg-[#F6F7F9]">
+        Loading...
+      </div>
+    }
+  >
+    <PaymentPage />
+  </Suspense>
+);
 
 export default Payment;
