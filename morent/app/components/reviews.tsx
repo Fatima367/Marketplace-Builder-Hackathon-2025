@@ -4,6 +4,7 @@ import { SignedIn, useUser } from "@clerk/nextjs";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = useState([]); // Ensure reviews is initialized as an array
@@ -127,7 +128,11 @@ export default function Reviews({ slug }: any) {
             className="flex mt-6 items-start relative shadow-sm rounded-2xl"
           >
             <Image
-              src={review.profileImage || "/images/profileiconloggedout.png"}
+              src={
+                review.profileImage?.asset?._ref
+                  ? urlFor(review.profileImage.asset._ref).url()
+                  : "/images/profileiconloggedout.png"
+              }
               height={56}
               width={56}
               alt="Profile-Image"
