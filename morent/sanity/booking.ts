@@ -7,19 +7,26 @@ export default {
       name: "order_date",
       type: "datetime",
       title: "Order Date",
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "customer",
       type: "reference",
       to: [{ type: "customer" }],
       title: "Customer",
+      validation: (Rule: any) => Rule.required(),
     },
     {
-      name: "items",
+      name: "bookedCars",
       title: "Booked Cars",
       type: "array",
       of: [{ type: "reference", to: [{ type: "bookedCar" }] }],
-      description: "Array of cars that have been booked.",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: "total_amount",
+      type: "string",
+      title: "Total Amount",
     },
   ],
 };

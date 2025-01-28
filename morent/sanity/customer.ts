@@ -3,16 +3,35 @@ export default {
   type: "document",
   title: "Customers",
   fields: [
-    { name: "name", type: "string", title: "Name" },
-    { name: "phone", type: "string", title: "Phone" },
-    { name: "address", type: "string", title: "Address" },
-    { name: "townCity", type: "string", title: "Town/City" },
     {
-      name: "bookedCars",
-      title: "Booked Cars",
+      name: "name",
+      type: "string",
+      title: "Name",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: "phone",
+      type: "string",
+      title: "Phone",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: "address",
+      type: "string",
+      title: "Address",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: "townCity",
+      type: "string",
+      title: "Town/City",
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: "bookings",
+      title: "Bookings",
       type: "array",
-      of: [{ type: "reference", to: [{ type: "bookedCar" }] }],
-      description: "Array of cars that the customer has booked.",
+      of: [{ type: "reference", to: [{ type: "booking" }] }],
     },
   ],
 };

@@ -118,6 +118,14 @@ export default function BookingForm() {
       }
     }
 
+    if (paymentMethod === "paypal") {
+      return;
+    }
+
+    if (paymentMethod === "bitcoin") {
+      return;
+    }
+
     try {
       const rentalData = {
         carData: carData.map((car) => ({
@@ -302,8 +310,8 @@ export default function BookingForm() {
               {pickupSuggestions.length > 0 && (
                 <ul
                   className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
-                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
-                top-32 left-0"
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
+                top-16 left-0"
                 >
                   {pickupSuggestions.map((suggestion, index) => (
                     <li
@@ -395,8 +403,8 @@ export default function BookingForm() {
               {dropoffSuggestions.length > 0 && (
                 <ul
                   className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
-                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
-                top-32 left-0"
+                rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
+                top-16 left-0"
                 >
                   {dropoffSuggestions.map((suggestion, index) => (
                     <li
