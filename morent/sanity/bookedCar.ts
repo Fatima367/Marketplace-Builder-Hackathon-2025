@@ -57,5 +57,11 @@ export default {
       type: "string",
       validation: (Rule: any) => Rule.required(),
     },
+    {
+      name: "customer",
+      type: "reference",
+      to: [{ type: "customer" }],
+      title: "Customer",
+    },
   ],
 };

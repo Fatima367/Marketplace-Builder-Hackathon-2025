@@ -45,7 +45,7 @@ const calculateTotalRent = (carData: any) => {
   return `$${totalRent}`;
 };
 
-const createBookedCar = async (carData: any) => {
+const createBookedCar = async (carData: any, customer: any) => {
   try {
     const totalRent = calculateTotalRent(carData);
 
@@ -60,6 +60,10 @@ const createBookedCar = async (carData: any) => {
       dropoff_date: carData.dropoffDate,
       pickup_time: carData.pickupTime,
       dropoff_time: carData.dropoffTime,
+      customer: {
+        _type: "reference",
+        _ref: customer._id,
+      },
     });
 
     return { ...bookedCar, total_rent: totalRent };
@@ -74,7 +78,7 @@ export default async function CheckOut(rentalData: any) {
     const customer = await createCustomer(rentalData.customerInfo);
 
     const bookedCarsPromises = rentalData.carData.map((car: any) =>
-      createBookedCar(car)
+      createBookedCar(car, customer)
     );
     const bookedCars = await Promise.all(bookedCarsPromises);
 
@@ -100,6 +104,7 @@ export default async function CheckOut(rentalData: any) {
       total_amount: `$${totalAmount}`,
     });
 
+    // Append the new booking to the customer's bookings array
     await client
       .patch(customer._id)
       .setIfMissing({ bookings: [] })
