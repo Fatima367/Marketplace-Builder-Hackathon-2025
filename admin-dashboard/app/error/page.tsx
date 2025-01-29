@@ -1,5 +1,4 @@
 "use client";
-
 import { useSearchParams } from "next/navigation";
 import {
   Card,
@@ -10,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default function ErrorPage() {
+const Error = () => {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
@@ -34,4 +34,18 @@ export default function ErrorPage() {
       </Card>
     </div>
   );
-}
+};
+
+const ErrorPage = () => (
+  <Suspense
+    fallback={
+      <div className="text-[#90A3BF] flex justify-center mt-5 bg-[#F6F7F9]">
+        Loading...
+      </div>
+    }
+  >
+    <Error />
+  </Suspense>
+);
+
+export default ErrorPage;
