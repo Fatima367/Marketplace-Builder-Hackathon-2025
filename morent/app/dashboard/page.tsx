@@ -1,12 +1,15 @@
-import { Checkbox } from "@/components/ui/checkbox";
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Navbar from "../navbar/Navbar";
 import Navbar3 from "../navbar/Navbar3";
 import { ClerkProvider, SignedIn, SignOutButton } from "@clerk/nextjs";
+import { Moon, Sun } from "lucide-react";
 
 const Dashboard = () => {
+  const [theme, setTheme] = useState("light");
+
   return (
     <ClerkProvider>
       <SignedIn>
@@ -113,66 +116,65 @@ const Dashboard = () => {
                 </p>
 
                 <div className="space-y-8">
-                  <div
-                    className="text-xl font-medium flex z-10 text-[#90A3BF] items-center
+                  <Link href="/settings">
+                    <div
+                      className="text-xl font-medium flex z-10 text-[#90A3BF] items-center
                hover:bg-blue-50 hover:rounded-md cursor-pointer"
-                  >
-                    <Image
-                      src="/images/setting.png"
-                      height={24}
-                      width={24}
-                      alt="Home"
-                      className="ml-3 mr-2"
-                    />{" "}
-                    <p>Settings</p>
-                  </div>
-
-                  <div
-                    className="text-xl font-medium flex z-10 text-[#90A3BF] items-center
-               hover:bg-blue-50 hover:rounded-md cursor-pointer"
-                  >
-                    <Image
-                      src="/images/info.png"
-                      height={24}
-                      width={24}
-                      alt="Home"
-                      className="ml-3 mr-2"
-                    />{" "}
-                    <p> Help & Center</p>
-                  </div>
-
-                  <div
-                    className="text-xl font-medium flex z-10 text-[#90A3BF] items-center justify-between
-               hover:bg-blue-50 hover:rounded-md cursor-pointer"
-                  >
-                    <div className="flex">
+                    >
                       <Image
-                        src="/images/briefcase.png"
+                        src="/images/setting.png"
                         height={24}
                         width={24}
                         alt="Home"
                         className="ml-3 mr-2"
                       />{" "}
-                      <p> Dark Mode</p>
+                      <p>Settings</p>
+                    </div>
+                  </Link>
+
+                  <div className="text-xl font-medium flex z-10 text-[#90A3BF] items-center hover:bg-blue-50 hover:rounded-md cursor-pointer">
+                    <Image
+                      src="/images/info.png"
+                      height={24}
+                      width={24}
+                      alt="Help"
+                      className="ml-3 mr-2"
+                    />
+                    <p>Help Center</p>
+                  </div>
+
+                  {/* Dark Mode Toggle */}
+                  <div className="text-xl font-medium flex z-10 text-[#90A3BF] items-center justify-between hover:bg-blue-50 hover:rounded-md cursor-pointer">
+                    <div className="flex items-center">
+                      <Image
+                        src="/images/briefcase.png"
+                        height={24}
+                        width={24}
+                        alt="Theme"
+                        className="ml-3 mr-2"
+                      />
+                      <p>Dark Mode</p>
                     </div>
                     <div
-                      className="bg-[#F6F7F9] rounded-full flex items-center justify-center
-                 w-[68px] h-[34px] space-x-3"
+                      onClick={() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      }
+                      className="bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-1 cursor-pointer"
                     >
-                      <div className="rounded-full bg-[#3563E9] h-7 w-7 flex items-center justify-center">
-                        <Image
-                          src="/images/sun.png"
-                          height={16}
-                          width={16}
-                          alt="lightmode"
+                      <div
+                        className={`rounded-full ${theme === "light" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
+                      >
+                        <Sun
+                          className={`h-4 w-4 ${theme === "light" ? "text-white" : "text-gray-400"}`}
                         />
                       </div>
-                      <Image
-                        src="/images/moon.png"
-                        height={14.96}
-                        width={14.96}
-                        alt="darkmode"
-                      />
+                      <div
+                        className={`rounded-full ${theme === "dark" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
+                      >
+                        <Moon
+                          className={`h-4 w-4 ${theme === "dark" ? "text-white" : "text-gray-400"}`}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
