@@ -86,7 +86,7 @@ export default function Navbar3() {
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/settings">
               <li className="flex space-x-3">
                 <button>
                   <Image

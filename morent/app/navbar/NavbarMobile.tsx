@@ -124,7 +124,7 @@ export default function NavbarMobile() {
           </div>
         </Link>
 
-        <Link href="/">
+        <Link href="/settings">
           <div
             className="w-9 h-9 flex-none rounded-full ring-1 ring-[#C3D4E9] ring-opacity-40 
             flex items-center justify-center"

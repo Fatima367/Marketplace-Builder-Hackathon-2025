@@ -114,7 +114,7 @@ export default function Navbar2() {
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/settings">
               <li className="flex space-x-3">
                 <button>
                   <Image
@@ -177,9 +177,7 @@ export default function Navbar2() {
               )}
             </button>
           </div>
-          {showFilter && (
-            <Filters />
-          )}
+          {showFilter && <Filters />}
         </div>
       </div>
     </nav>
