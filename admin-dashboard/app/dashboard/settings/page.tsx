@@ -1,6 +1,4 @@
 "use client";
-import { SideNav } from "@/components/side-nav";
-import { TopNav } from "@/components/top-nav";
 import {
   Select,
   SelectContent,
@@ -9,9 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Globe, InfoIcon, Moon, Sun } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { LuInfo } from "react-icons/lu";
+import { HiOutlineBriefcase } from "react-icons/hi2";
 
 const Settings = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -29,28 +26,28 @@ const Settings = () => {
   return (
     <div className="bg-[#F6F7F9] dark:bg-gray-900 min-h-screen">
       <div className="flex justify-center mx-auto">
-        <div className="p-4 bg-white dark:bg-gray-800 h-fit w-full mx-10 my-5 shadow-sm rounded-xl">
+        <div className="lg:p-4 md:p-4 p-3 bg-white dark:bg-gray-800 h-fit w-full lg:mx-10 my-5 shadow-sm rounded-xl">
           <div className="flex flex-col space-y-4 justify-start">
             <div
               className="text-xl font-medium flex z-10 text-[#90A3BF] items-center hover:bg-blue-50 
-            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:rounded-md cursor-pointer p-2"
+            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:rounded-md cursor-pointer lg:p-2 md:p-2"
             >
-              <InfoIcon className="ml-3 mr-2 h-6 w-6" />
+              <InfoIcon className="lg:ml-3 md:ml-3 ml-1 mr-2 h-6 w-6" />
               <p>Help Center</p>
             </div>
 
             {/* Dark Mode Toggle */}
             <div
               className="text-xl font-medium flex z-10 text-[#90A3BF] items-center justify-between
-            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:bg-blue-50 hover:rounded-md cursor-pointer p-2"
+            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:bg-blue-50 hover:rounded-md cursor-pointer lg:p-2 md:p-2"
             >
               <div className="flex items-center">
-                <LuInfo className="ml-3 mr-2 h-6 w-6" />
+                <HiOutlineBriefcase className="lg:ml-3 md:ml-3 ml-1 mr-2 h-6 w-6" />
                 <p>Dark Mode</p>
               </div>
               <div
                 onClick={toggleTheme}
-                className="ml-6 bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-3 cursor-pointer"
+                className="lg:ml-6 md:ml-6 bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-3 cursor-pointer"
               >
                 <div
                   className={`rounded-full ${!isDarkMode ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
@@ -72,10 +69,10 @@ const Settings = () => {
             {/* Language Switcher */}
             <div
               className="text-xl font-medium flex z-10 text-[#90A3BF] items-center justify-between 
-            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:bg-blue-50 hover:rounded-md cursor-pointer p-2 gap-2"
+            dark:hover:bg-gray-200 dark:hover:text-gray-950 hover:bg-blue-50 hover:rounded-md cursor-pointer lg:p-2 md:p-2 gap-2"
             >
               <div className="flex items-center">
-                <Globe className="ml-3 mr-2 h-6 w-6" />
+                <Globe className="lg:ml-3 md:ml-3 ml-1 mr-2 h-6 w-6" />
                 <p>Language</p>
               </div>
               <Select>

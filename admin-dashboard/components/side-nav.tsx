@@ -42,7 +42,7 @@ export function SideNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-64 min-h-[100rem] bg-white dark:bg-gray-950">
+    <nav className="lg:w-64 md:w-36 min-h-[100rem] bg-white dark:bg-gray-950">
       <div className="space-y-4 py-4">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
@@ -57,8 +57,8 @@ export function SideNav() {
                   : "text-[#90A3BF] hover:text-[#1A202C] hover:bg-blue-50 dark:hover:bg-gray-200"
               )}
             >
-              <item.icon className="h-5 w-5" />
-              {item.name}
+              <item.icon className="h-6 w-6" />
+              <span className="hidden md:inline">{item.name}</span>
             </Link>
           );
         })}
