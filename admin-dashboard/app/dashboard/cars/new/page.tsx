@@ -40,7 +40,7 @@ export default function NewCarPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-6">
-      <Card>
+      <Card className="dark:bg-gray-950">
         <CardHeader>
           <CardTitle>Add New Car</CardTitle>
         </CardHeader>
@@ -48,12 +48,22 @@ export default function NewCarPage() {
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Car Name</Label>
-              <Input id="name" name="name" required />
+              <Input
+                id="name"
+                name="name"
+                required
+                className="dark:bg-gray-800"
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Input id="category" name="category" required />
+              <Input
+                id="category"
+                name="category"
+                required
+                className="dark:bg-gray-800"
+              />
             </div>
 
             <div className="space-y-2">
@@ -65,12 +75,18 @@ export default function NewCarPage() {
                 min="0"
                 step="0.01"
                 required
+                className="dark:bg-gray-800"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="fuel">Fuel Type</Label>
-              <Input id="fuel" name="fuel" required />
+              <Input
+                id="fuel"
+                name="fuel"
+                required
+                className="dark:bg-gray-800"
+              />
             </div>
 
             <div className="space-y-2">
@@ -81,13 +97,14 @@ export default function NewCarPage() {
                 type="number"
                 min="1"
                 required
+                className="dark:bg-gray-800"
               />
             </div>
 
             <Button
               type="submit"
               disabled={isLoading}
-              className="bg-[#3563E9] hover:bg-blue-800"
+              className="bg-[#3563E9] hover:bg-blue-800 dark:text-white text-white"
             >
               {isLoading ? "Adding..." : "Add Car"}
             </Button>

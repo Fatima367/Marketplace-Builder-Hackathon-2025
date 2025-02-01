@@ -32,7 +32,7 @@ export default async function CarsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-[#1A202C]">Cars</h1>
         <Link href="/dashboard/cars/new">
-          <Button className="bg-[#3563E9] hover:bg-blue-800">
+          <Button className="bg-[#3563E9] hover:bg-blue-800 dark:bg-[#3563E9] dark:text-white">
             <Plus className="mr-2 h-4 w-4" />
             Add New Car
           </Button>
@@ -43,12 +43,14 @@ export default async function CarsPage() {
         {cars.map((car: any) => (
           <div
             className="bg-white rounded-lg flex flex-col p-6 relative flex-shrink-0 lg:flex-shrink
-          w-[304px] md:w-full lg:w-auto shadow-sm"
+          w-[304px] md:w-full lg:w-auto shadow-sm dark:bg-gray-800"
             key={car._id}
           >
             <div className="flex items-start justify-between">
               <div className="flex flex-col text-left space-y-1">
-                <p className="font-bold text-xl text-[#1A202C]">{car.name}</p>
+                <p className="font-bold text-xl text-[#1A202C] dark:text-slate-300">
+                  {car.name}
+                </p>
                 <p className="font-bold text-sm text-[#90A3BF]">
                   {car.category}
                 </p>
@@ -82,7 +84,7 @@ export default async function CarsPage() {
             </div>
 
             <div className="flex items-start justify-between mt-6 gap-2">
-              <div className="flex flex-col font-bold text-[#1A202C]">
+              <div className="flex flex-col font-bold text-[#1A202C] dark:text-slate-300">
                 <div className="text-xl font-bold">
                   {car.rentPerDay}/{" "}
                   <span className="text-sm text-[#90A3BF]">day</span>
@@ -94,11 +96,19 @@ export default async function CarsPage() {
 
               <div className="flex gap-2">
                 <Link href={`/dashboard/cars/${car._id}`}>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="dark:bg-blue-800"
+                  >
                     Edit
                   </Button>
                 </Link>
-                <Button variant="destructive" size="sm">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="dark:bg-red-600"
+                >
                   Delete
                 </Button>
               </div>

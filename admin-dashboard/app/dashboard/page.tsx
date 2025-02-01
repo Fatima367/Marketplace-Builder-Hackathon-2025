@@ -81,7 +81,7 @@ export default async function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.name}>
+          <Card key={stat.name} className="dark:bg-gray-950">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-medium text-[#90A3BF]">
                 {stat.name}
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
               <stat.icon className="h-6 w-6 text-[#90A3BF]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-[#1A202C]">
+              <div className="text-2xl font-bold text-[#1A202C] dark:text-slate-200">
                 {stat.value}
               </div>
             </CardContent>
@@ -98,16 +98,19 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="dark:bg-gray-950">
           <CardHeader>
-            <CardTitle>Recent Rentals</CardTitle>
+            <CardTitle className="dark:text-slate-300">
+              Recent Rentals
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {data.recentRentals.map((rental: any, index: number) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-4 border rounded-lg bg-[#fafafd]"
+                  className="flex justify-between items-center p-4 border rounded-lg 
+                  bg-[#fafafd] dark:bg-gray-800"
                 >
                   <div>
                     <p className="font-medium">{rental.car_name}</p>
@@ -127,16 +130,17 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="dark:bg-gray-950">
           <CardHeader>
-            <CardTitle>Popular Cars</CardTitle>
+            <CardTitle className="dark:text-slate-300">Popular Cars</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {data.popularCars.map((car: any, index: number) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-4 border rounded-lg bg-[#fafafd]"
+                  className="flex justify-between items-center p-4 border rounded-lg
+                   bg-[#fafafd] dark:bg-gray-800"
                 >
                   <div>
                     <p className="font-medium">{car.name}</p>
