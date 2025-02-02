@@ -16,7 +16,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Eye } from "lucide-react";
 
 interface RentalsClientProps {
   rentals: any[];
