@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./header/page";
 import Footer from "./footer/page";
 import { ClerkProvider } from "@clerk/nextjs";
+import { WishlistProvider } from "./contexts/wishlist-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased font-PlusJakartaSans`}
         >
-          <Header />
-          {children}
-          <Footer />
+          <WishlistProvider>
+            <Header />
+            {children}
+            <Footer />
+          </WishlistProvider>
         </body>
       </html>
     </ClerkProvider>

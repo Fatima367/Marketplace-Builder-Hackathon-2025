@@ -1,26 +1,15 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import Navbar2 from "../navbar/Navbar2";
 import Link from "next/link";
+import { useWishlist } from "../contexts/wishlist-context";
+import { IoCarSport, IoCarSportOutline } from "react-icons/io5";
+import { Search } from "lucide-react";
 
 export default function Wishlist() {
-  const [wishlist, setWishlist] = useState<any[]>([]);
-
-  useEffect(() => {
-    const favItems = JSON.parse(
-      localStorage.getItem("carRentWishlist") || "[]"
-    );
-    setWishlist(favItems);
-    console.log("Product passed to Wishlist:", favItems);
-  }, []);
-
-  const handleDelete = (itemId: string) => {
-    const updatedWishlist = wishlist.filter((item) => item._id !== itemId);
-    setWishlist(updatedWishlist); // Update the wishlist state
-    localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
-  };
+  const { wishlist, handleDelete } = useWishlist();
 
   return (
     <div>
@@ -38,7 +27,7 @@ export default function Wishlist() {
                   space-y-2 w-[28rem] rounded md:w-full"
         >
           {wishlist.length > 0 ? (
-            wishlist.map((item) => (
+            wishlist.map((item: any) => (
               <div className="bg-white p-3 rounded-md shadow-sm" key={item._id}>
                 <div className="flex items-start justify-between">
                   <div className="flex gap-4 items-center">
@@ -65,18 +54,34 @@ export default function Wishlist() {
                       </Link>
                     </div>
                   </div>
-                  <AiOutlineDelete
-                    onClick={() => handleDelete(item._id)}
-                    className="text-[#90A3BF] h-6 w-6 hover:cursor-pointer hover:text-[#8ea5c6]"
-                  />
+                  <div
+                    className="flex items-center justify-center rounded-full
+                   hover:bg-[#F6F7F9] p-2"
+                  >
+                    <AiOutlineDelete
+                      onClick={() => handleDelete(item._id)}
+                      className="text-[#90A3BF] h-6 w-6 hover:cursor-pointer"
+                    />
+                  </div>
                 </div>
               </div>
             ))
           ) : (
             <div className="flex items-center justify-center mx-auto">
-              <p className="text-[#90A3BF] text-base">
-                Your wishlist is empty!
-              </p>
+              <div className="flex-col">
+                <p className="text-[#90A3BF] text-base">
+                  Your wishlist is empty!
+                </p>
+                <Link href="/car-rent">
+                  <div
+                    className="mt-3 mb-4 bg-[#90A3BF] hover:bg-slate-500 rounded-full p-2 flex
+              items-center justify-center gap-2 hover:scale-100 duration-100 hover:shadow-md"
+                  >
+                    <p className="text-white font-medium">Browse Cars</p>
+                    <IoCarSport className="h-5 w-5 text-white" />
+                  </div>
+                </Link>
+              </div>
             </div>
           )}
         </div>

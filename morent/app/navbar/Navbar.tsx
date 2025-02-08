@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import SearchBar from "../components/searchBar";
 import {
@@ -9,24 +8,11 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  UserButton,
 } from "@clerk/nextjs";
+import { useWishlist } from "../contexts/wishlist-context";
 
 export default function Navbar() {
-  const [wishlist, setWishlist] = useState<any[]>([]);
-
-  useEffect(() => {
-    const favItems = JSON.parse(
-      localStorage.getItem("carRentWishlist") || "[]"
-    );
-    setWishlist(favItems);
-  }, []);
-
-  const handleDelete = (itemId: string) => {
-    const updatedWishlist = wishlist.filter((item) => item._id !== itemId);
-    setWishlist(updatedWishlist); // Update the wishlist state
-    localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
-  };
+  const { wishlist, handleDelete } = useWishlist();
 
   const handleSearch = (query: string) => {
     console.log("Searching for:", query);
@@ -99,7 +85,7 @@ export default function Navbar() {
                 />
               </div>
               {wishlist.length > 0 ? (
-                wishlist.map((item) => (
+                wishlist.map((item: any) => (
                   <li
                     className="bg-white p-3 rounded-md shadow-sm"
                     key={item._id}
@@ -131,10 +117,15 @@ export default function Navbar() {
                           </Link>
                         </div>
                       </div>
-                      <AiOutlineDelete
-                        onClick={() => handleDelete(item._id)}
-                        className="text-[#90A3BF] h-5 w-5 hover:cursor-pointer hover:text-[#8ea5c6]"
-                      />
+                      <div
+                        className="flex items-center justify-center hover:bg-[#F6F7F9]
+                      rounded-full p-1"
+                      >
+                        <AiOutlineDelete
+                          onClick={() => handleDelete(item._id)}
+                          className="text-[#90A3BF] h-5 w-5 hover:cursor-pointer"
+                        />
+                      </div>
                     </div>
                   </li>
                 ))
