@@ -37,6 +37,7 @@ export default function Reviews({ slug }: any) {
     fetchReviews();
   }, [slug]);
 
+  /*
   const uploadImageToSanity = async (imageUrl: string) => {
     try {
       const response = profileImage;
@@ -52,6 +53,7 @@ export default function Reviews({ slug }: any) {
       throw error;
     }
   };
+  */
 
   const handleReviewSubmit = async () => {
     if (!reviewText || rating === 0) return;
