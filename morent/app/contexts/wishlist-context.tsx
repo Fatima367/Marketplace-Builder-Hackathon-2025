@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const WishlistContext = createContext<any | undefined>(undefined);
+const WishlistContext = createContext<any>(undefined);
 
 export const WishlistProvider = ({
   children,
