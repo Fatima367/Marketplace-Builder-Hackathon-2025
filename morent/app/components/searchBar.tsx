@@ -10,7 +10,7 @@ interface SearchSuggestion {
 }
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
+  readonly onSearch: (query: string) => void;
 }
 
 export default function SearchBar({ onSearch }: SearchBarProps) {
