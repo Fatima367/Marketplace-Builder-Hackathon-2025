@@ -27,7 +27,6 @@ export default function FavIcon({ car }: any) {
   };
 
   return (
-    <>
       <button onClick={handleClick}>
         {isFav ? (
           <Image
@@ -45,6 +44,5 @@ export default function FavIcon({ car }: any) {
           />
         )}
       </button>
-    </>
   );
 }
