@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import Navbar2 from "../navbar/Navbar2";
 import Link from "next/link";
 import { useWishlist } from "../contexts/wishlist-context";
-import { IoCarSport, IoCarSportOutline } from "react-icons/io5";
-import { Search } from "lucide-react";
+import { IoCarSport } from "react-icons/io5";
 
 export default function Wishlist() {
   const { wishlist, handleDelete } = useWishlist();
