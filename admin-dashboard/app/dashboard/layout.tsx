@@ -5,9 +5,9 @@ import { useEffect } from "react";
 
 export default function DashboardLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   useEffect(() => {
     // Check local storage for theme preference
     const savedTheme = localStorage.getItem("theme");
