@@ -73,7 +73,7 @@ function CustomerDetails({ customer }: Readonly<{ customer: any }>) {
 }
 
 interface CustomersClientProps {
-  customers: any[];
+  readonly customers: any[];
 }
 
 export function CustomersClient({ customers }: CustomersClientProps) {

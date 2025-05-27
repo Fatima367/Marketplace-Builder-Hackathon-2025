@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 
 interface RentalsClientProps {
-  rentals: any[];
+  readonly rentals: any[];
 }
 
 function getRentalStatus(pickupDate: string, dropoffDate: string) {
@@ -31,7 +31,7 @@ function getRentalStatus(pickupDate: string, dropoffDate: string) {
   return "active";
 }
 
-function RentalDetails({ rental }: { rental: any }) {
+function RentalDetails({ rental }: Readonly<{ rental: any }>) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
