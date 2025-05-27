@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { SignedIn, useUser } from "@clerk/nextjs";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+// import { client } from "@/sanity/lib/client";
 
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = useState([]); // Ensure reviews is initialized as an array
@@ -158,7 +158,7 @@ export default function Reviews({ slug }: any) {
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <span
-                        key={i}
+                        key={`star-${i+1}`}
                         className={`${
                           i < review.rating
                             ? "text-yellow-500"
@@ -224,7 +224,7 @@ export default function Reviews({ slug }: any) {
             <div className="flex items-center mt-3">
               {[...Array(5)].map((_, i) => (
                 <span
-                  key={i}
+                  key={`star-${i+1}`}
                   role="button"
                   tabIndex={0}
                   onClick={() => setRating(i + 1)}
