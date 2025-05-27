@@ -2,7 +2,7 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Filters from "../components/filters";
 import { SearchBarMobile } from "../components/searchBar";
 
@@ -17,25 +17,8 @@ export default function Navbar2() {
     console.log("Product passed to Wishlist:", favItems);
   }, []);
 
-  const handleDelete = (itemId: string) => {
-    const updatedWishlist = wishlist.filter((item) => item._id !== itemId);
-    setWishlist(updatedWishlist); // Update the wishlist state
-    localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist)); // Update localStorage
-  };
-
   const [showNav, setShowNav] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
-
-  const [progress, setProgress] = useState(70);
-
-  const increaseProgress = (e: MouseEvent<HTMLDivElement>) => {
-    setProgress((prev) => Math.min(prev + 10, 100));
-  };
-
-  const decreaseProgress = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); // Prevent triggering the parent click
-    setProgress((prev) => Math.max(prev - 10, 0));
-  };
 
   const handleSearch = (query: string) => {
     console.log("Searching for:", query);
