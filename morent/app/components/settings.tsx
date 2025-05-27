@@ -8,10 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import ThemeToggle from "./theme-toggle-btn";
 
 export default function SettingsComponent() {
-  const [theme, setTheme] = useState("light");
 
   return (
     <div className="flex flex-col space-y-4 justify-start">
@@ -38,25 +37,8 @@ export default function SettingsComponent() {
           />
           <p>Dark Mode</p>
         </div>
-        <div
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="ml-6 bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-3 cursor-pointer"
-        >
-          <div
-            className={`rounded-full ${theme === "light" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
-          >
-            <Sun
-              className={`h-4 w-4 ${theme === "light" ? "text-white" : "text-gray-400"}`}
-            />
-          </div>
-          <div
-            className={`rounded-full ${theme === "dark" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
-          >
-            <Moon
-              className={`h-4 w-4 ${theme === "dark" ? "text-white" : "text-gray-400"}`}
-            />
-          </div>
-        </div>
+        {/* Theme Toggle Button*/}
+        <ThemeToggle />
       </div>
 
       {/* Language Switcher */}
