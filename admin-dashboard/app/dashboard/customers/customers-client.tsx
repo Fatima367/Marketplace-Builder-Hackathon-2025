@@ -25,7 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Eye, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 function CustomerDetails({ customer }: { customer: any }) {
   return (

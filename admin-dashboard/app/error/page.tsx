@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const Error = () => {
+const CustomError = () => {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
@@ -44,7 +44,7 @@ const ErrorPage = () => (
       </div>
     }
   >
-    <Error />
+    <CustomError />
   </Suspense>
 );
 
