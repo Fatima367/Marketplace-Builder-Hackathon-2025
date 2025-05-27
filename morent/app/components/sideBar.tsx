@@ -1,7 +1,7 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
 
 export default function Sidebar({ className }: { className?: string }) {
   const router = useRouter();
@@ -14,7 +14,6 @@ export default function Sidebar({ className }: { className?: string }) {
     "Hatchback",
   ];
   const defaultCapacities = ["2 People", "4 People", "6 People", "8 People"];
-  const [progress, setProgress] = useState(70);
 
   const handleCategoryChange = (category: string, isChecked: boolean) => {
     const currentParams = new URLSearchParams(window.location.search);
@@ -44,15 +43,6 @@ export default function Sidebar({ className }: { className?: string }) {
     }
 
     router.push(`?${currentParams.toString()}`);
-  };
-
-  const increaseProgress = (e: MouseEvent<HTMLDivElement>) => {
-    setProgress((prev) => Math.min(prev + 10, 100));
-  };
-
-  const decreaseProgress = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); // Prevent triggering the parent click
-    setProgress((prev) => Math.max(prev - 10, 0));
   };
 
   return (
@@ -95,24 +85,8 @@ export default function Sidebar({ className }: { className?: string }) {
       <div className="flex flex-col space-y-4 mt-14 ml-2">
         <p className="text-[#90A3BF] text-base">P R I C E</p>
 
-        {/* Progress bar */}
-        <div
-          className="relative w-full h-2 bg-gray-300 rounded overflow-hidden
-            hover:cursor-pointer"
-          onClick={increaseProgress}
-        >
-          <div
-            className="h-full bg-blue-500 transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          ></div>
-
-          <div
-            className="absolute -right-2 w-4 h-4 bg-blue-500 rounded-full ring-4
-                 ring-white z-50 top-0 "
-            style={{ left: `${progress}%` }}
-            onClick={decreaseProgress}
-          ></div>
-        </div>
+        {/* Slider bar */}
+        <Slider defaultValue={[70]} max={100} step={1} className="hover:cursor-pointer"/>
 
         <p className="text-xl font-medium text-[#596780]">Max. $100.00</p>
       </div>
