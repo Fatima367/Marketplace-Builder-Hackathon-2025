@@ -169,10 +169,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 }
 
 
-
-{
-  /*Search bar for mobile phones*/
-}
+/*Search bar for mobile phones*/
 
 export function SearchBarMobile({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState("");
