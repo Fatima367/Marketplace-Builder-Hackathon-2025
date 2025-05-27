@@ -108,7 +108,7 @@ export default async function DashboardPage() {
             <div className="space-y-4">
               {data.recentRentals.map((rental: any, index: number) => (
                 <div
-                  key={index}
+                  key={`recent-rentals-${index + 1}`}
                   className="flex justify-between items-center p-4 border rounded-lg 
                   bg-[#fafafd] dark:bg-gray-800"
                 >
@@ -138,7 +138,7 @@ export default async function DashboardPage() {
             <div className="space-y-4">
               {data.popularCars.map((car: any, index: number) => (
                 <div
-                  key={index}
+                  key={`popular-car-${index + 1}`}
                   className="flex justify-between items-center p-4 border rounded-lg
                    bg-[#fafafd] dark:bg-gray-800"
                 >
