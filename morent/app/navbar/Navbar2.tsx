@@ -11,7 +11,7 @@ export default function Navbar2() {
 
   useEffect(() => {
     const favItems = JSON.parse(
-      localStorage.getItem("carRentWishlist") || "[]"
+      localStorage.getItem("carRentWishlist") ?? "[]"
     );
     setWishlist(favItems);
     console.log("Product passed to Wishlist:", favItems);
