@@ -14,6 +14,20 @@ export const fetchPlaces = async (query: string) => {
   return data.data || []; // Return the `data` array from the API response
 };
 
+const handleLocationChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setLocation: React.Dispatch<React.SetStateAction<string>>,
+    setSuggestions: React.Dispatch<React.SetStateAction<any[]>> ) => {
+    const location = e.target.value;
+    setLocation(location);
+    if (location.length > 2) {
+      const places = await fetchPlaces(location);
+      setSuggestions(places); // Update suggestions
+    } else {
+      setSuggestions([]); // Clear suggestions if input is too short
+    }
+  };
+
 export default function HomePagePickAndDropForm() {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
@@ -24,20 +38,7 @@ export default function HomePagePickAndDropForm() {
   const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
   const [dropoffTime, setDropoffTime] = useState<string>("");
 
-  const handleLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
-  ) => {
-    const location = e.target.value;
-    setLocation(location);
-    if (location.length > 2) {
-      const places = await fetchPlaces(location);
-      setSuggestions(places); // Update suggestions
-    } else {
-      setSuggestions([]); // Clear suggestions if input is too short
-    }
-  };
+  
 
   const handleSuggestionClick = (
     suggestion: any,
@@ -86,7 +87,7 @@ export default function HomePagePickAndDropForm() {
                 >
                   {pickupSuggestions.map((suggestion, index) => (
                     <li
-                      key={index}
+                      key={`location-${index + 1}`}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
@@ -192,7 +193,7 @@ export default function HomePagePickAndDropForm() {
                 >
                   {dropoffSuggestions.map((suggestion, index) => (
                     <li
-                      key={index}
+                      key={`location-${index + 1}`}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
@@ -262,20 +263,6 @@ export function PickAndDropForm() {
   const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
   const [dropoffTime, setDropoffTime] = useState<string>("");
 
-  const handleLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
-  ) => {
-    const location = e.target.value;
-    setLocation(location);
-    if (location.length > 2) {
-      const places = await fetchPlaces(location);
-      setSuggestions(places); // Update suggestions
-    } else {
-      setSuggestions([]); // Clear suggestions if input is too short
-    }
-  };
 
   const handleSuggestionClick = (
     suggestion: any,
@@ -332,7 +319,7 @@ export function PickAndDropForm() {
                 >
                   {pickupSuggestions.map((suggestion, index) => (
                     <li
-                      key={index}
+                      key={`location-${index + 1}`}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
@@ -449,7 +436,7 @@ export function PickAndDropForm() {
                 >
                   {dropoffSuggestions.map((suggestion, index) => (
                     <li
-                      key={index}
+                      key={`location-${index + 1}`}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
