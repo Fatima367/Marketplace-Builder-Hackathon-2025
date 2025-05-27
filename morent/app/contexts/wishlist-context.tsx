@@ -13,7 +13,7 @@ export const WishlistProvider = ({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const favItems = JSON.parse(
-        localStorage.getItem("carRentWishlist") || "[]"
+        localStorage.getItem("carRentWishlist") ?? "[]"
       );
       setWishlist(favItems);
     }
