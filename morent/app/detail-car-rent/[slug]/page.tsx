@@ -96,9 +96,9 @@ const urlFor = (source: SanityImageSource) =>
 
 export default async function DetailCarRent({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ slug: string }>; // Expecting slug with the format 'carId-name'
-}) {
+}>) {
   // Extracting the slug from the params (e.g., '10-chevrolet-camaro')
   const { slug } = await params;
 
