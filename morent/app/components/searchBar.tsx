@@ -68,13 +68,14 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  /*
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
       onSearch(query);
       setShowSuggestions(false);
     }
-  };
+  }; */
 
   return (
     <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
@@ -226,13 +227,15 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  /*
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
       onSearch(query);
       setShowSuggestions(false);
     }
-  };
+  }; */
+
   return (
     <div
       className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
@@ -270,7 +273,7 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
           ) : suggestions.length > 0 ? (
             <ul>
               {suggestions.map((suggestion, index) => (
-                <li key={index}>
+                <li key={`suggestion-${index + 1}`}>
                   <Link
                     href={`/detail-car-rent/${suggestion.slug}`}
                     className="block px-4 py-2 hover:bg-gray-100"
