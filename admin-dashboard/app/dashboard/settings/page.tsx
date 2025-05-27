@@ -19,10 +19,12 @@ const Settings = () => {
   }, []);
 
   const toggleTheme = () => {
+    const newTheme = !isDarkMode ? "dark" : "light";
     document.documentElement.classList.toggle("dark");
     setIsDarkMode(!isDarkMode);
-    localStorage.setItem("theme", isDarkMode ? "light" : "dark");
+    localStorage.setItem("theme", newTheme);
   };
+  
   return (
     <div className="bg-[#F6F7F9] dark:bg-gray-900 min-h-screen">
       <div className="flex justify-center mx-auto">
@@ -45,8 +47,9 @@ const Settings = () => {
                 <HiOutlineBriefcase className="lg:ml-3 md:ml-3 ml-1 mr-2 h-6 w-6" />
                 <p>Dark Mode</p>
               </div>
-              <div
+              <button
                 onClick={toggleTheme}
+                aria-label="Toggle dark mode"
                 className="lg:ml-6 md:ml-6 bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-3 cursor-pointer"
               >
                 <div
@@ -63,7 +66,7 @@ const Settings = () => {
                     className={`h-4 w-4 ${isDarkMode ? "text-white" : "text-gray-400"}`}
                   />
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* Language Switcher */}
