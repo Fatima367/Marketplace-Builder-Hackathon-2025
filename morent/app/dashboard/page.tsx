@@ -5,10 +5,9 @@ import Link from "next/link";
 import Navbar from "../navbar/Navbar";
 import Navbar3 from "../navbar/Navbar3";
 import { ClerkProvider, SignedIn, SignOutButton } from "@clerk/nextjs";
-import { Moon, Sun } from "lucide-react";
+import ThemeToggle from "../components/theme-toggle-btn";
 
 const Dashboard = () => {
-  const [theme, setTheme] = useState("light");
 
   return (
     <ClerkProvider>
@@ -155,27 +154,8 @@ const Dashboard = () => {
                       />
                       <p>Dark Mode</p>
                     </div>
-                    <div
-                      onClick={() =>
-                        setTheme(theme === "dark" ? "light" : "dark")
-                      }
-                      className="bg-[#F6F7F9] dark:bg-gray-700 rounded-full w-[68px] h-[34px] flex items-center justify-center space-x-1 cursor-pointer"
-                    >
-                      <div
-                        className={`rounded-full ${theme === "light" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
-                      >
-                        <Sun
-                          className={`h-4 w-4 ${theme === "light" ? "text-white" : "text-gray-400"}`}
-                        />
-                      </div>
-                      <div
-                        className={`rounded-full ${theme === "dark" ? "bg-[#3563E9]" : ""} h-7 w-7 flex items-center justify-center transition-colors`}
-                      >
-                        <Moon
-                          className={`h-4 w-4 ${theme === "dark" ? "text-white" : "text-gray-400"}`}
-                        />
-                      </div>
-                    </div>
+                    {/* Theme Toggle Button*/}
+                    <ThemeToggle />
                   </div>
                 </div>
               </div>
