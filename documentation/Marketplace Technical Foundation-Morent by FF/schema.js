@@ -13,9 +13,9 @@ const car = defineType({
   ],
 }); 
 
-//Client Schema
-{
-  /*
+// Client Schema
+
+/*
 client.create({
  _type: "client"
  name: cleintDetails.name
@@ -29,11 +29,11 @@ client.create({
              }
 })
 */
-}
 
-//Booking Schema
-{
-  /*
+
+// Booking Schema
+
+/*
 client.create(
 {
 _type:"booking",
@@ -60,4 +60,3 @@ puDateTime: item.pickupDateTime
 })
 
 */
-}
