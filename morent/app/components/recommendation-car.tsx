@@ -7,9 +7,9 @@ import { FaCar } from "react-icons/fa";
 
 export default function RecommendationCar({
   carCardsNo,
-}: {
+}: Readonly<{
   carCardsNo: number;
-}) {
+}>) {
   const [recommendationCarData, setRecommendationCarData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
