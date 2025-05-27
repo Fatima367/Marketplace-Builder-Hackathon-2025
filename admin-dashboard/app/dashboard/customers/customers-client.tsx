@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { Search } from "lucide-react";
 
-function CustomerDetails({ customer }: { customer: any }) {
+function CustomerDetails({ customer }: Readonly<{ customer: any }>) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
