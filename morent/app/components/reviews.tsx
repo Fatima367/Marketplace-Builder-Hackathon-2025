@@ -223,8 +223,17 @@ export default function Reviews({ slug }: any) {
               {[...Array(5)].map((_, i) => (
                 <span
                   key={i}
-                  className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setRating(i + 1)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setRating(i + 1);
+                    }
+                  }}
+                  className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                  aria-label={`Rate ${i + 1} stars`}
                 >
                   ★
                 </span>
@@ -275,8 +284,17 @@ export default function Reviews({ slug }: any) {
             {[...Array(5)].map((_, i) => (
               <span
                 key={i}
-                className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                role="button"
+                tabIndex={0}
                 onClick={() => setRating(i + 1)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setRating(i + 1);
+                  }
+                }}
+                className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                aria-label={`Rate ${i + 1} stars`}
               >
                 ★
               </span>
