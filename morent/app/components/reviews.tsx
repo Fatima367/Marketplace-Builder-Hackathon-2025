@@ -285,7 +285,7 @@ export default function Reviews({ slug }: any) {
           <div className="flex items-center mt-3">
             {[...Array(5)].map((_, i) => (
               <span
-                key={i}
+                key={`star-${i + 1}`}
                 role="button"
                 tabIndex={0}
                 onClick={() => setRating(i + 1)}
