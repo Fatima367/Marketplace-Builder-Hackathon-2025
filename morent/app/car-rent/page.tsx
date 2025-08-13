@@ -13,8 +13,8 @@ import { PickAndDropForm } from "../components/pickNdrop-form";
 import { FaCar } from "react-icons/fa";
 
 const CarRent = () => {
-  const [popularCarData, setPopularCarData] = useState<any[]>([]);
-  const [recommendationCarData, setRecommendationCarData] = useState<any[]>([]);
+  const [popularCarData, setPopularCarData] = useState([]);
+  const [recommendationCarData, setRecommendationCarData] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
