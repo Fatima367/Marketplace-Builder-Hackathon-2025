@@ -1,3 +1,6 @@
+// import Rule from "@sanity/types/package.json"
+import { Rule } from "sanity";
+
 export default {
   name: "bookedCar",
   title: "Booked Car",
@@ -7,55 +10,55 @@ export default {
       name: "car_name",
       title: "Car Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "car_rent",
       title: "Car Rent",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "total_rent",
       title: "Total Rent",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "pickup_location",
       title: "Pickup Location",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "dropoff_location",
       title: "Drop-off Location",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "pickup_date",
       title: "Pickup Date",
       type: "datetime", // Changed from date to datetime
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "dropoff_date",
       title: "Drop-off Date",
       type: "datetime", // Changed from date to datetime
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "pickup_time",
       title: "Pickup Time",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "dropoff_time",
       title: "Drop-off Time",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "customer",

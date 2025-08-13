@@ -1,3 +1,5 @@
+import { Rule } from "sanity";
+
 export const car = {
   name: "car",
   title: "Car",
@@ -71,7 +73,7 @@ export const car = {
         source: "name", // Automatically generate slug from the `name`
         maxLength: 96, // Maximum length of the slug
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
 };

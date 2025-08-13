@@ -1,3 +1,5 @@
+import { Rule } from "sanity";
+
 export default {
   name: "booking",
   type: "document",
@@ -7,7 +9,7 @@ export default {
       name: "order_date",
       type: "datetime",
       title: "Order Date",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "customer",
