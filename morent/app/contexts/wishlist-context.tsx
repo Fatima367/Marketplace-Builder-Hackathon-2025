@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const WishlistContext = createContext<any>(undefined);
 
@@ -31,8 +31,15 @@ export const WishlistProvider = ({
     localStorage.setItem("carRentWishlist", JSON.stringify(updatedWishlist));
   };
 
+  const wishlistValue = useMemo(() => ({
+  wishlist,
+  addToWishlist,
+  handleDelete
+  }), [wishlist, addToWishlist, handleDelete]);
+
+
   return (
-    <WishlistContext.Provider value={{ wishlist, addToWishlist, handleDelete }}>
+    <WishlistContext.Provider value={wishlistValue}>
       {children}
     </WishlistContext.Provider>
   );
