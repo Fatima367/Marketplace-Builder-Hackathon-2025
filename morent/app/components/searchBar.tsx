@@ -68,14 +68,6 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /*
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onSearch(query);
-      setShowSuggestions(false);
-    }
-  }; */
 
   return (
     <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
