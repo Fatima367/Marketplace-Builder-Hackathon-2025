@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
 
-export default function Sidebar({ className }: { className?: string }) {
+export default function Sidebar({ className }: Readonly<{ className?: string }>) {
   const router = useRouter();
   const defaultCategories = [
     "Sport",

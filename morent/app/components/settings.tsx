@@ -1,5 +1,5 @@
 "use client";
-import { Globe, Moon, Sun } from "lucide-react";
+import { Globe } from "lucide-react";
 import Image from "next/image";
 import {
   Select,
