@@ -36,23 +36,6 @@ export default function Reviews({ slug }: any) {
     fetchReviews();
   }, [slug]);
 
-  /*
-  const uploadImageToSanity = async (imageUrl: string) => {
-    try {
-      const response = profileImage;
-      const imageBuffer = Buffer.from(profileImage, "binary");
-
-      const uploadedImage = await client.assets.upload("image", imageBuffer, {
-        filename: imageUrl.split("/").pop(), // Use the file name from the URL
-      });
-
-      return uploadedImage._id;
-    } catch (error) {
-      console.error("Error uploading image to Sanity:", error);
-      throw error;
-    }
-  };
-  */
 
   const handleReviewSubmit = async () => {
     if (!reviewText || rating === 0) return;
