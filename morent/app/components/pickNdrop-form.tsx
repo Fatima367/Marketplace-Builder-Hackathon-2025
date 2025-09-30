@@ -61,10 +61,12 @@ export default function HomePagePickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto lg:absolute lg:top-14 lg:left-8">
             <div className="space-y-2 flex flex-col">
-              <label className="text-base font-bold text-[#1A202C]">
+              <label htmlFor="pickup-location" className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
               <input
+                id="pickup-location"
+                list="pickup-suggestion"
                 type="text"
                 placeholder="Select your city"
                 value={pickupLocation}
@@ -80,7 +82,6 @@ export default function HomePagePickAndDropForm() {
               {/* Suggestions dropdown */}
               {pickupSuggestions.length > 0 && (
                 <ul
-                role="listbox"
                 className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
@@ -88,7 +89,6 @@ export default function HomePagePickAndDropForm() {
                   {pickupSuggestions.map((suggestion, index) => (
                     <li
                       key={`location-${index + 1}`}
-                      role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
