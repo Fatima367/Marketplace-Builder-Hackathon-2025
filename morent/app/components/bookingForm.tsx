@@ -314,9 +314,9 @@ export default function BookingForm() {
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
                 top-16 left-0"
                 >
-                  {pickupSuggestions.map((suggestion, index) => (
+                  {pickupSuggestions.map((suggestion) => (
                     <li
-                      key={index}
+                      key={suggestion.label}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
@@ -420,9 +420,9 @@ export default function BookingForm() {
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
                 top-16 left-0"
                 >
-                  {dropoffSuggestions.map((suggestion, index) => (
+                  {dropoffSuggestions.map((suggestion) => (
                     <li
-                      key={index}
+                      key={suggestion.label}
                       role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
