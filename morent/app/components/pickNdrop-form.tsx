@@ -66,7 +66,7 @@ export default function HomePagePickAndDropForm() {
               </label>
               <input
                 id="pickup-location"
-                list="pickup-suggestion"
+                list="pickup-suggestions"
                 type="text"
                 placeholder="Select your city"
                 value={pickupLocation}
@@ -117,10 +117,11 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 lg:space-y-0 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="pickup-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
               <ReactDatePicker
+                id="pickup-date"
                 selected={pickupDate}
                 onChange={(date) => setPickupDate(date)}
                 dateFormat="MM/dd/yyyy"
@@ -130,10 +131,11 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="pickup-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
               <input
+                id="pickup-time"
                 type="time"
                 value={pickupTime}
                 onChange={(e) => setPickupTime(e.target.value)}
@@ -167,10 +169,12 @@ export default function HomePagePickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto lg:absolute lg:top-14 lg:left-8">
             <div className="space-y-2 flex flex-col">
-              <label className="text-base font-bold text-[#1A202C]">
+              <label htmlFor="dropoff-location" className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
               <input
+                id="dropoff-location"
+                list="dropoff-suggestions"
                 type="text"
                 placeholder="Select your city"
                 value={dropoffLocation}
@@ -186,7 +190,6 @@ export default function HomePagePickAndDropForm() {
               {/* Suggestions dropdown */}
               {dropoffSuggestions.length > 0 && (
                 <ul
-                role="listbox"
                 className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
@@ -194,7 +197,6 @@ export default function HomePagePickAndDropForm() {
                   {dropoffSuggestions.map((suggestion, index) => (
                     <li
                       key={`location-${index + 1}`}
-                      role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
@@ -223,10 +225,11 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 lg:space-y-0 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="dropoff-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
               <ReactDatePicker
+                id="dropoff-date"
                 selected={dropoffDate}
                 onChange={(date) => setDropoffDate(date)}
                 dateFormat="MM/dd/yyyy"
@@ -236,10 +239,11 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="dropoff-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
               <input
+                id="dropoff-time"
                 type="time"
                 value={dropoffTime}
                 onChange={(e) => setDropoffTime(e.target.value)}
@@ -291,10 +295,12 @@ export function PickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto">
             <div className="space-y-2 flex flex-col">
-              <label className="text-base font-bold text-[#1A202C]">
+              <label htmlFor="pickup-location" className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
               <input
+                id="pickup-location"
+                list="pickup-suggestions"
                 type="text"
                 placeholder="Select your city"
                 value={pickupLocation}
@@ -312,7 +318,6 @@ export function PickAndDropForm() {
               {/* Suggestions dropdown */}
               {pickupSuggestions.length > 0 && (
                 <ul
-                role="listbox"
                 className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
@@ -320,7 +325,6 @@ export function PickAndDropForm() {
                   {pickupSuggestions.map((suggestion, index) => (
                     <li
                       key={`location-${index + 1}`}
-                      role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
@@ -349,10 +353,11 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 lg:space-y-[2px] flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="pickup-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
               <ReactDatePicker
+                id="pickup-date"
                 selected={pickupDate}
                 onChange={(date) => setPickupDate(date)}
                 dateFormat="MM/dd/yyyy"
@@ -363,10 +368,11 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="pickup-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
               <input
+                id="pickup-time"
                 type="time"
                 value={pickupTime}
                 onChange={(e) => setPickupTime(e.target.value)}
@@ -407,10 +413,12 @@ export function PickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto">
             <div className="space-y-2 flex flex-col">
-              <label className="text-base font-bold text-[#1A202C]">
+              <label htmlFor="dropoff-location" className="text-base font-bold text-[#1A202C]">
                 Locations
               </label>
               <input
+                id="dropoff-location"
+                list="dropoff-suggestions"
                 className="w-full lg:w-[110%] border-0 text-[#90A3BF] font-medium
           text-xs bg-transparent lg:p-0 p-2 lg:rounded-none rounded-md
           focus:outline-none focus:border-none placeholder:text-[#90A3BF]
@@ -429,7 +437,6 @@ export function PickAndDropForm() {
               {/* Suggestions dropdown */}
               {dropoffSuggestions.length > 0 && (
                 <ul
-                role="listbox"
                 className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
@@ -437,7 +444,6 @@ export function PickAndDropForm() {
                   {dropoffSuggestions.map((suggestion, index) => (
                     <li
                       key={`location-${index + 1}`}
-                      role="option"
                       tabIndex={0}
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
@@ -466,10 +472,11 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 lg:space-y-[2px] flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="dropoff-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Date
               </label>
               <ReactDatePicker
+                id="dropoff-date"
                 selected={dropoffDate}
                 onChange={(date) => setDropoffDate(date)}
                 dateFormat="MM/dd/yyyy"
@@ -480,10 +487,11 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
-              <label className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label htmlFor="dropoff-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
                 Time
               </label>
               <input
+                id="dropoff-time"
                 type="time"
                 value={dropoffTime}
                 onChange={(e) => setDropoffTime(e.target.value)}
