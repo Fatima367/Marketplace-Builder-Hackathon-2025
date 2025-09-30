@@ -4,7 +4,6 @@ import { SignedIn, useUser } from "@clerk/nextjs";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-// import { client } from "@/sanity/lib/client";
 
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = useState([]); // Ensure reviews is initialized as an array
