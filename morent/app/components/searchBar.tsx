@@ -221,7 +221,6 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  
   return (
     <div
       className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
@@ -254,9 +253,10 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
           className="absolute z-30 w-full mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto
         top-6 left-0"
         >
-          {isLoading ? (
-            <div className="p-4 text-center">Loading...</div>
-          ) : suggestions.length > 0 ? (
+          {isLoading && (
+            <div className="p-4 text-center text-[#596780]">Loading...</div>
+          )}
+          {!isLoading && suggestions.length > 0 && (
             <ul>
               {suggestions.map((suggestion, index) => (
                 <li key={`suggestion-${index + 1}`}>
@@ -273,8 +273,9 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
                 </li>
               ))}
             </ul>
-          ) : (
-            <div className="p-4 text-center">No cars found</div> // Display message when no results found
+          )}
+          {!isLoading && suggestions.length === 0 && (
+            <div className="p-4 text-center text-[#596780]">No cars found</div>
           )}
         </div>
       )}
