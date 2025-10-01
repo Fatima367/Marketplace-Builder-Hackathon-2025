@@ -68,7 +68,6 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
   return (
     <div className="flex items-center justify-center space-x-5 lg:transform lg:-mt-2 mt-4">
       {/* Search bar */}
@@ -133,9 +132,11 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           className="absolute z-30 min-w-96 mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto
         top-5"
         >
-          {isLoading ? (
-            <div className="p-4 text-center">Loading...</div>
-          ) : suggestions.length > 0 ? (
+          {isLoading && (
+            <div className="p-4 text-center text-[#596780]">Loading...</div>
+          )}
+
+          {!isLoading && suggestions.length > 0 && (
             <ul>
               {suggestions.map((suggestion, index) => (
                 <li key={`search-item-${index + 1}`}>
@@ -152,15 +153,16 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                 </li>
               ))}
             </ul>
-          ) : (
-            <div className="p-4 text-center">No cars found</div> // Display message when no results found
+          )}
+
+          {!isLoading && suggestions.length === 0 && (
+            <div className="p-4 text-center text-[#596780]">No cars found</div>
           )}
         </div>
       )}
     </div>
   );
 }
-
 
 /*Search bar for mobile phones*/
 
