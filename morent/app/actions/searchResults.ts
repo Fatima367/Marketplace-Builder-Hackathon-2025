@@ -2,7 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 
 export default async function SearchResults(debouncedQuery?: string) {
-  const query = debouncedQuery ? debouncedQuery : "";
+  const query = debouncedQuery;
 
   try {
     const cars = await client.fetch(
