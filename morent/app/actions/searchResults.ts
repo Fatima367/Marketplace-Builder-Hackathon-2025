@@ -25,6 +25,7 @@ export default async function SearchResults(debouncedQuery?: string) {
 
     return cars;
   } catch (error) {
+    console.log(error)
     return [];
   }
 }
