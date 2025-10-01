@@ -90,6 +90,7 @@ export default function HomePagePickAndDropForm() {
                     <li
                       key={`location-${index + 1}`}
                       tabIndex={0}
+                      role="option"
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
                         handleSuggestionClick(
@@ -198,6 +199,7 @@ export default function HomePagePickAndDropForm() {
                     <li
                       key={`location-${index + 1}`}
                       tabIndex={0}
+                      role="option"
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
                         handleSuggestionClick(
@@ -326,6 +328,7 @@ export function PickAndDropForm() {
                     <li
                       key={`location-${index + 1}`}
                       tabIndex={0}
+                      role="option"
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
                         handleSuggestionClick(
@@ -445,6 +448,7 @@ export function PickAndDropForm() {
                     <li
                       key={`location-${index + 1}`}
                       tabIndex={0}
+                      role="option"
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() =>
                         handleSuggestionClick(
