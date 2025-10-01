@@ -138,7 +138,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           ) : suggestions.length > 0 ? (
             <ul>
               {suggestions.map((suggestion, index) => (
-                <li key={index}>
+                <li key={`search-item-${index + 1}`}>
                   <Link
                     href={`/detail-car-rent/${suggestion.slug}`}
                     className="block px-4 py-2 hover:bg-gray-100"
