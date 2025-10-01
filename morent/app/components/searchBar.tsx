@@ -221,15 +221,7 @@ export function SearchBarMobile({ onSearch }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /*
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onSearch(query);
-      setShowSuggestions(false);
-    }
-  }; */
-
+  
   return (
     <div
       className="flex items-center justify-between w-[280px] lg:w-[420px] h-[36px]
