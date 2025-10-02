@@ -36,7 +36,6 @@ export default function Reviews({ slug }: any) {
     fetchReviews();
   }, [slug]);
 
-
   const handleReviewSubmit = async () => {
     if (!reviewText || rating === 0) return;
 
@@ -140,7 +139,7 @@ export default function Reviews({ slug }: any) {
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <span
-                        key={`star-${i+1}`}
+                        key={`star-${i + 1}`}
                         className={`${
                           i < review.rating
                             ? "text-yellow-500"
@@ -205,22 +204,15 @@ export default function Reviews({ slug }: any) {
             />
             <div className="flex items-center mt-3">
               {[...Array(5)].map((_, i) => (
-                <span
-                  key={`star-${i+1}`}
-                  role="button"
-                  tabIndex={0}
+                <button
+                  key={`star-${i + 1}`}
+                  type="button" // Important for preventing unwanted form submission
                   onClick={() => setRating(i + 1)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      setRating(i + 1);
-                    }
-                  }}
-                  className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"}`}
+                  className={`cursor-pointer text-xl ${i < rating ? "text-yellow-500" : "text-gray-300"} focus:outline-none`}
                   aria-label={`Rate ${i + 1} stars`}
                 >
                   ★
-                </span>
+                </button>
               ))}
             </div>
             <button

@@ -309,36 +309,25 @@ export default function BookingForm() {
               />
               {pickupSuggestions.length > 0 && (
                 <ul
-                role="listbox"
-                className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
                 top-16 left-0"
                 >
-                  {pickupSuggestions.map((suggestion) => (
-                    <li
-                      key={suggestion.label}
-                      role="option"
-                      tabIndex={0}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault(); // Prevent scrolling
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                  {pickupSuggestions.map((suggestion, i) => (
+                    <li key={`${suggestion}-${i + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setPickupLocation,
+                            setPickupSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -415,36 +404,25 @@ export default function BookingForm() {
               />
               {dropoffSuggestions.length > 0 && (
                 <ul
-                role="listbox"
-                className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:left-0 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-16 md:left-0
                 top-16 left-0"
                 >
-                  {dropoffSuggestions.map((suggestion) => (
-                    <li
-                      key={suggestion.label}
-                      role="option"
-                      tabIndex={0}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                  {dropoffSuggestions.map((suggestion, i) => (
+                    <li key={`${suggestion}-${i + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setDropoffLocation,
+                            setDropoffSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>

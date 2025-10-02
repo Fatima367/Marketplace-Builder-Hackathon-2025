@@ -15,18 +15,19 @@ export const fetchPlaces = async (query: string) => {
 };
 
 const handleLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setLocation: React.Dispatch<React.SetStateAction<string>>,
-    setSuggestions: React.Dispatch<React.SetStateAction<any[]>> ) => {
-    const location = e.target.value;
-    setLocation(location);
-    if (location.length > 2) {
-      const places = await fetchPlaces(location);
-      setSuggestions(places); // Update suggestions
-    } else {
-      setSuggestions([]); // Clear suggestions if input is too short
-    }
-  };
+  e: React.ChangeEvent<HTMLInputElement>,
+  setLocation: React.Dispatch<React.SetStateAction<string>>,
+  setSuggestions: React.Dispatch<React.SetStateAction<any[]>>
+) => {
+  const location = e.target.value;
+  setLocation(location);
+  if (location.length > 2) {
+    const places = await fetchPlaces(location);
+    setSuggestions(places); // Update suggestions
+  } else {
+    setSuggestions([]); // Clear suggestions if input is too short
+  }
+};
 
 export default function HomePagePickAndDropForm() {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -37,8 +38,6 @@ export default function HomePagePickAndDropForm() {
   const [pickupTime, setPickupTime] = useState<string>("");
   const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
   const [dropoffTime, setDropoffTime] = useState<string>("");
-
-  
 
   const handleSuggestionClick = (
     suggestion: any,
@@ -61,7 +60,10 @@ export default function HomePagePickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto lg:absolute lg:top-14 lg:left-8">
             <div className="space-y-2 flex flex-col">
-              <label htmlFor="pickup-location" className="text-base font-bold text-[#1A202C]">
+              <label
+                htmlFor="pickup-location"
+                className="text-base font-bold text-[#1A202C]"
+              >
                 Locations
               </label>
               <input
@@ -82,35 +84,25 @@ export default function HomePagePickAndDropForm() {
               {/* Suggestions dropdown */}
               {pickupSuggestions.length > 0 && (
                 <ul
-                className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
                 >
                   {pickupSuggestions.map((suggestion, index) => (
-                    <li
-                      key={`location-${index + 1}`}
-                      tabIndex={0}
-                      role="option"
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault(); // Prevent scrolling
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                    <li key={`location-${index + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setPickupLocation,
+                            setPickupSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -118,7 +110,10 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 lg:space-y-0 flex-col flex">
-              <label htmlFor="pickup-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="pickup-date"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Date
               </label>
               <ReactDatePicker
@@ -132,7 +127,10 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
-              <label htmlFor="pickup-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="pickup-time"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Time
               </label>
               <input
@@ -170,7 +168,10 @@ export default function HomePagePickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto lg:absolute lg:top-14 lg:left-8">
             <div className="space-y-2 flex flex-col">
-              <label htmlFor="dropoff-location" className="text-base font-bold text-[#1A202C]">
+              <label
+                htmlFor="dropoff-location"
+                className="text-base font-bold text-[#1A202C]"
+              >
                 Locations
               </label>
               <input
@@ -191,35 +192,25 @@ export default function HomePagePickAndDropForm() {
               {/* Suggestions dropdown */}
               {dropoffSuggestions.length > 0 && (
                 <ul
-                className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
                 >
                   {dropoffSuggestions.map((suggestion, index) => (
-                    <li
-                      key={`location-${index + 1}`}
-                      tabIndex={0}
-                      role="option"
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                    <li key={`location-${index + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setDropoffLocation,
+                            setDropoffSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -227,7 +218,10 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 lg:space-y-0 flex-col flex">
-              <label htmlFor="dropoff-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="dropoff-date"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Date
               </label>
               <ReactDatePicker
@@ -241,7 +235,10 @@ export default function HomePagePickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"></div>
             <div className="space-y-2 flex-col flex">
-              <label htmlFor="dropoff-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="dropoff-time"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Time
               </label>
               <input
@@ -268,7 +265,6 @@ export function PickAndDropForm() {
   const [pickupTime, setPickupTime] = useState<string>("");
   const [dropoffDate, setDropoffDate] = useState<Date | null>(null);
   const [dropoffTime, setDropoffTime] = useState<string>("");
-
 
   const handleSuggestionClick = (
     suggestion: any,
@@ -297,7 +293,10 @@ export function PickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto">
             <div className="space-y-2 flex flex-col">
-              <label htmlFor="pickup-location" className="text-base font-bold text-[#1A202C]">
+              <label
+                htmlFor="pickup-location"
+                className="text-base font-bold text-[#1A202C]"
+              >
                 Locations
               </label>
               <input
@@ -320,35 +319,25 @@ export function PickAndDropForm() {
               {/* Suggestions dropdown */}
               {pickupSuggestions.length > 0 && (
                 <ul
-                className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
                 >
                   {pickupSuggestions.map((suggestion, index) => (
-                    <li
-                      key={`location-${index + 1}`}
-                      tabIndex={0}
-                      role="option"
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault(); // Prevent scrolling
-                        handleSuggestionClick(
-                          suggestion,
-                          setPickupLocation,
-                          setPickupSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                    <li key={`location-${index + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setPickupLocation,
+                            setPickupSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -356,7 +345,10 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 lg:space-y-[2px] flex-col flex">
-              <label htmlFor="pickup-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="pickup-date"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Date
               </label>
               <ReactDatePicker
@@ -371,7 +363,10 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-5 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
-              <label htmlFor="pickup-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="pickup-time"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Time
               </label>
               <input
@@ -416,7 +411,10 @@ export function PickAndDropForm() {
 
           <div className="lg:space-x-4 space-x-2 flex mt-4 mx-auto">
             <div className="space-y-2 flex flex-col">
-              <label htmlFor="dropoff-location" className="text-base font-bold text-[#1A202C]">
+              <label
+                htmlFor="dropoff-location"
+                className="text-base font-bold text-[#1A202C]"
+              >
                 Locations
               </label>
               <input
@@ -440,35 +438,25 @@ export function PickAndDropForm() {
               {/* Suggestions dropdown */}
               {dropoffSuggestions.length > 0 && (
                 <ul
-                className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
+                  className="absolute lg:top-16 lg:-left-5 bg-[#F6F7F9] shadow-md 
                 rounded-2xl w-full max-h-40 overflow-y-auto z-30 md:top-36 md:left-0
                 top-32 left-0"
                 >
                   {dropoffSuggestions.map((suggestion, index) => (
-                    <li
-                      key={`location-${index + 1}`}
-                      tabIndex={0}
-                      role="option"
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        )
-                      }
-                      onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleSuggestionClick(
-                          suggestion,
-                          setDropoffLocation,
-                          setDropoffSuggestions
-                        );
-                      }
-                    }}
-                    >
-                      {suggestion.label}
+                    <li key={`location-${index + 1}`}>
+                      <button
+                        type="button"
+                        className="w-full text-left p-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() =>
+                          handleSuggestionClick(
+                            suggestion,
+                            setDropoffLocation,
+                            setDropoffSuggestions
+                          )
+                        }
+                      >
+                        {suggestion.label}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -476,7 +464,10 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 lg:space-y-[2px] flex-col flex">
-              <label htmlFor="dropoff-date" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="dropoff-date"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Date
               </label>
               <ReactDatePicker
@@ -491,7 +482,10 @@ export function PickAndDropForm() {
             </div>
             <div className="mx-6 w-[1px] bg-[#C3D4E9] opacity-40"> </div>
             <div className="space-y-2 flex-col flex">
-              <label htmlFor="dropoff-time" className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1">
+              <label
+                htmlFor="dropoff-time"
+                className="text-base font-bold text-[#1A202C] lg:ml-0 ml-1"
+              >
                 Time
               </label>
               <input
